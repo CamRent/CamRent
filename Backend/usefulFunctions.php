@@ -32,7 +32,8 @@ function saveIntoSession($row)
 /**
  * takes the first email input and sends an email to the given address
  */
-function firstRegister(){
+function firstRegister()
+{
     $email = getEmail();
     $activationCode = generateActivationcode();
     sendEmail($email, $activationCode);
@@ -41,11 +42,12 @@ function firstRegister(){
 /**
  * generates an activationcode and saves it into the db
  */
-function generateActivationcode(){
+function generateActivationcode()
+{
     $chars = "abcdefghijkmnopqrstuvwxyz023456789";
-    srand((double)microtime()*1000000);
+    srand((double)microtime() * 1000000);
     $i = 0;
-    $pass = '' ;
+    $pass = '';
     while ($i <= 20) {
         $num = rand() % 33;
         $tmp = substr($chars, $num, 1);
@@ -60,7 +62,8 @@ function generateActivationcode(){
  * @param PDO $pdo
  * @param $item array with useful infos about the item
  */
-function addItem(PDO $pdo, $item){
+function addItem(PDO $pdo, $item)
+{
     $user_check_query = "INSERT INTO items(name,available,teacherId,description) VALUES (:name,:available,:teacherId,:description)";
     if ($stmt = $pdo->prepare($user_check_query)) {
         $stmt->bindParam(':name', $item['name'], PDO::PARAM_STR);
@@ -78,7 +81,8 @@ function addItem(PDO $pdo, $item){
  * @param PDO $pdo
  * @return array 2d array with all available items
  */
-function getAllAvailableItems(PDO $pdo){
+function getAllAvailableItems(PDO $pdo)
+{
     $count = 0;
     $items = array();
     $user_check_query = "SELECT * FROM items WHERE available = 1";
@@ -100,7 +104,8 @@ function getAllAvailableItems(PDO $pdo){
  * @param PDO $pdo
  * @return array $items 2d array with all items
  */
-function getAllItems(PDO $pdo){
+function getAllItems(PDO $pdo)
+{
     $count = 0;
     $items = array();
     $user_check_query = "SELECT * FROM items";
@@ -115,4 +120,45 @@ function getAllItems(PDO $pdo){
         }
     }
     return $items;
+}
+
+/**
+ * checks if an Item exists in the db
+ * delete Item from the database
+ * @param PDO $pdo
+ * @param $itemId integer id of the item we want to delete
+ */
+function deleteItem(PDO $pdo, $itemId)
+{
+    if (doesItemExist($pdo, $itemId)) {
+        $user_check_query = "DELETE FROM items WHERE PK_ItemId = :itemId";
+        if ($stmt = $pdo->prepare($user_check_query)) {
+            $stmt->bindParam(':itemId', $itemId, PDO::PARAM_STR);
+            if ($stmt->execute()) {
+                sendSuccess("Item has been deleted successfully");
+            }
+        }
+    }
+}
+
+
+/**
+ * return true if an item exists in db
+ * @param PDO $pdo
+ * @param $itemId
+ * @return bool
+ */
+function doesItemExist(PDO $pdo, $itemId)
+{
+    $user_check_query = "SELECT PK_ItemId FROM items WHERE PK_ItemId = :itemId";
+    if ($stmt = $pdo->prepare($user_check_query)) {
+        $stmt->bindParam(':itemId', $itemId, PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            $row = $stmt->fetch();
+            if ($row->count() == 1) {
+                return true;
+            }
+        }
+    }
+    return false;
 }

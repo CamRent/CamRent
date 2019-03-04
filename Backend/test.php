@@ -1,4 +1,4 @@
 <?php
 require_once "sendEmail.php";
 
-sendEmail("linhartfelix0@gmail.com");
+sendEmail("test-y61mn@mail-tester.com");
