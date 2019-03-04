@@ -55,7 +55,64 @@ function generateActivationcode(){
     return $pass;
 }
 
-function getAvailableItems(PDO $pdo){
-    
+/**
+ * add Item to the database
+ * @param PDO $pdo
+ * @param $item array with useful infos about the item
+ */
+function addItem(PDO $pdo, $item){
+    $user_check_query = "INSERT INTO items(name,available,teacherId,description) VALUES (:name,:available,:teacherId,:description)";
+    if ($stmt = $pdo->prepare($user_check_query)) {
+        $stmt->bindParam(':name', $item['name'], PDO::PARAM_STR);
+        $stmt->bindParam(':available', $item['available'], PDO::PARAM_STR);
+        $stmt->bindParam(':teacherId', $item['teacherId'], PDO::PARAM_STR);
+        $stmt->bindParam(':description', $item['description'], PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            sendSuccess("Item has been added successfully");
+        }
+    }
+}
 
+/**
+ * returns an array with all available items
+ * @param PDO $pdo
+ * @return array 2d array with all available items
+ */
+function getAllAvailableItems(PDO $pdo){
+    $count = 0;
+    $items = array();
+    $user_check_query = "SELECT * FROM items WHERE available = 1";
+    if ($stmt = $pdo->prepare($user_check_query)) {
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $items[$count]['name'] = $row['name'];
+                $items[$count]['available'] = $row['available'];
+                $items[$count]['teacherId'] = $row['teacherId'];
+                $items[$count]['description'] = $row['description'];
+            }
+        }
+    }
+    return $items;
+}
+
+/**
+ * returns an array with all items
+ * @param PDO $pdo
+ * @return array $items 2d array with all items
+ */
+function getAllItems(PDO $pdo){
+    $count = 0;
+    $items = array();
+    $user_check_query = "SELECT * FROM items";
+    if ($stmt = $pdo->prepare($user_check_query)) {
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $items[$count]['name'] = $row['name'];
+                $items[$count]['available'] = $row['available'];
+                $items[$count]['teacherId'] = $row['teacherId'];
+                $items[$count]['description'] = $row['description'];
+            }
+        }
+    }
+    return $items;
 }
