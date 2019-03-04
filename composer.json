@@ -1,0 +1,14 @@
+{
+    "name": "felix/camrent",
+    "description": "A project that helps HTL Rennweg to manange their rentable items.",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.0"
+    },
+    "authors": [
+        {
+            "name": "Felix Linhart",
+            "email": "felix.linhart@htl.rennweg.at"
+        }
+    ]
+}
