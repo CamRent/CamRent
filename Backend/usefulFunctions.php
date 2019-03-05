@@ -265,5 +265,38 @@ function returnsAmountOfUnverifiedEmailPerEmail(PDO $pdo, $email)
     }
     sendError("A Problem occurred");
     return 0;
+}
 
+/**
+ * returns an "available" boolean based on an ID
+ * @param PDO $pdo
+ * @param $unverifiedEmailId
+ * @return int
+ */
+function returnActiveStateOfEmail(PDO $pdo, $unverifiedEmailId){
+   $user_check_query = "SELECT * FROM unverifiedemail WHERE PK_unverifiedEmailId = :unverifiedEmailId";
+   if($stmt = $pdo->prepare($user_check_query)){
+       $stmt->bindParam(':unverifiedEmailId',$unverifiedEmailId, PDO::PARAM_STR);
+       if($stmt->execute()){
+           $row = $stmt->fetch();
+           return $row['active'];
+       }
+   }
+   return 0;
+}
+
+/**
+ * make an unverifieddEmail inactive based on ID
+ * @param PDO $pdo
+ * @param $unverifiedEmailId
+ */
+function makeUnverifiedEmalInactive(PDO $pdo, $unverifiedEmailId){
+    $user_check_query = "UPDATE unverifiedemail SET active = 1 WHERE PK_unverifiedEmailId = :unverifiedEmailId";
+    if($stmt = $pdo->prepare($user_check_query)){
+        $stmt->bindParam(':unverifiedEmailId',$unverifiedEmailId, PDO::PARAM_STR);
+        if($stmt->execute()){
+            sendSuccess("$unverifiedEmailId became inactive successfully");
+        }
+    }
+    sendError("something went wrong");
 }
