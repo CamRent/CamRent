@@ -74,6 +74,7 @@ function addItem(PDO $pdo, $item)
             sendSuccess("Item has been added successfully");
         }
     }
+
 }
 
 /**
@@ -185,20 +186,41 @@ function isItemAvailable(PDO $pdo, $itemId)
 {
     if (doesItemExist($pdo, $itemId)) {
         $user_check_query = "SELECT available from items WHERE PK_ItemId = :itemId";
-          if ($stmt = $pdo->prepare($user_check_query)) {
-              $stmt->bindParam(':itemId', $itemId, PDO::PARAM_STR);
-              if ($stmt->execute()) {
-                  $row = $stmt->fetch();
-                  if($row['available'] == 1){
-                      return true;
-                  }
-                  else{
-                      return false;
-                  }
-              }
-          }
-          } else {
+        if ($stmt = $pdo->prepare($user_check_query)) {
+            $stmt->bindParam(':itemId', $itemId, PDO::PARAM_STR);
+            if ($stmt->execute()) {
+                $row = $stmt->fetch();
+                if ($row['available'] == 1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    } else {
         sendError("This Item does not exist unfortunately");
     }
     return false;
+}
+
+/**
+ * writes an email and a matching activationcode into the unverifiedEmail Table
+ * @param PDO $pdo
+ * @param $email
+ * @param $activationcode
+ */
+function writeIntoUnverifiedEmail(PDO $pdo, $email, $activationcode)
+{
+    $user_check_query = "INSERT INTO unverifiedemail(email, activationCode, date) VALUES (:email, :activationcode, now())";
+    if ($stmt = $pdo->prepare($user_check_query)) {
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':activationcode', $activationcode, PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            sendSuccess("Item has been added successfully");
+        }
+        else{
+            sendError("Something went wrong");
+        }
+    }
+
 }
