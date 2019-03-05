@@ -6,10 +6,12 @@ require '../vendor/phpmailer/PHPMailer/src/Exception.php';
 require '../vendor/phpmailer/PHPMailer/src/PHPMailer.php';
 require '../vendor/phpmailer/PHPMailer/src/SMTP.php';
 
+require_once "emailConfig.php";
+
 require_once "../vendor/autoload.php";
 
 
-function sendEmail($email,$activationcode ="test"){
+function sendEmail($email,$activationcode ="test", $password){
     $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
     try {
         //Server settings
@@ -18,7 +20,7 @@ function sendEmail($email,$activationcode ="test"){
         $mail->Host = 'mail.gmx.net';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
         $mail->Username = 'camrent@gmx.at';                 // SMTP username
-        $mail->Password = '!AndreasFelixKevinKianaNiklas';                           // SMTP password
+        $mail->Password = $password;                           // SMTP password
         $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 465;                                    // TCP port to connect to
 
@@ -39,6 +41,7 @@ function sendEmail($email,$activationcode ="test"){
 
         $mail->send();
         echo 'Message has been sent';
+
     } catch (Exception $e) {
         echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
     }

@@ -29,15 +29,7 @@ function saveIntoSession($row)
     $_SESSION['priority'] = $row['priority'];
 }
 
-/**
- * takes the first email input and sends an email to the given address
- */
-function firstRegister()
-{
-    $email = getEmail();
-    $activationCode = generateActivationcode();
-    sendEmail($email, $activationCode);
-}
+
 
 /**
  * generates an activationcode and saves it into the db
