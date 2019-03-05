@@ -30,7 +30,6 @@ function saveIntoSession($row)
 }
 
 
-
 /**
  * generates an activationcode and saves it into the db
  */
@@ -208,11 +207,63 @@ function writeIntoUnverifiedEmail(PDO $pdo, $email, $activationcode)
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':activationcode', $activationcode, PDO::PARAM_STR);
         if ($stmt->execute()) {
+
             sendSuccess("Item has been added successfully");
-        }
-        else{
+        } else {
             sendError("Something went wrong");
         }
     }
+}
+
+/**
+ * returns true if an activationcode matches the email
+ * @param PDO $pdo
+ * @param $email
+ * @param $activationcode
+ * @return bool
+ */
+function checkActivationcode(PDO $pdo, $email, $activationcode)
+{
+    if (returnsAmountOfUnverifiedEmailPerEmail($pdo, $email) == 0) {
+        $user_check_query = "SELECT activationcode FROM unverifiedemail WHERE email = :email";
+        if ($stmt = $pdo->prepare($user_check_query)) {
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            if ($stmt->execute()) {
+                $row = $stmt->fetch();
+                if($row['activationcode'] == $activationcode){
+                    sendSuccess("Item has been added successfully");
+                    return true;
+                }
+                else{
+                    sendError("Sorry, your activationcode is wrong.");
+                    return false;
+                }
+
+            } else {
+                sendError("Something went wrong");
+            }
+        }
+    }
+    return false;
+}
+
+/**
+ * returns the number of email adresses current in unverifiedEmail per email
+ * @param PDO $pdo
+ * @param $email
+ * @return int
+ */
+function returnsAmountOfUnverifiedEmailPerEmail(PDO $pdo, $email)
+{
+    $user_check_query = "SELECT * FROM unverifiedemail WHERE email = :email";
+    if ($stmt = $pdo->prepare($user_check_query)) {
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            $row = $stmt->fetch();
+            return $row->count();
+        }
+    }
+    sendError("A Problem occurred");
+    return 0;
 
 }

@@ -6,7 +6,7 @@ require '../vendor/phpmailer/PHPMailer/src/Exception.php';
 require '../vendor/phpmailer/PHPMailer/src/PHPMailer.php';
 require '../vendor/phpmailer/PHPMailer/src/SMTP.php';
 
-require_once "emailConfig.php";
+
 
 require_once "../vendor/autoload.php";
 
