@@ -162,3 +162,43 @@ function doesItemExist(PDO $pdo, $itemId)
     }
     return false;
 }
+
+/**
+ * user can rent/lend items, which changes their availability status
+ * @param PDO $pdo
+ * @param $itemdId
+ */
+function rentItem(PDO $pdo, $itemId)
+{
+    if (doesItemExist($pdo, $itemId)) {
+        $user_check_query = "";
+    }
+}
+
+/**
+ * checks if a given item is available judging by their availability tinyint
+ * @param PDO $pdo
+ * @param $itemId
+ * @return bool
+ */
+function isItemAvailable(PDO $pdo, $itemId)
+{
+    if (doesItemExist($pdo, $itemId)) {
+        $user_check_query = "SELECT available from items WHERE PK_ItemId = :itemId";
+          if ($stmt = $pdo->prepare($user_check_query)) {
+              $stmt->bindParam(':itemId', $itemId, PDO::PARAM_STR);
+              if ($stmt->execute()) {
+                  $row = $stmt->fetch();
+                  if($row['available'] == 1){
+                      return true;
+                  }
+                  else{
+                      return false;
+                  }
+              }
+          }
+          } else {
+        sendError("This Item does not exist unfortunately");
+    }
+    return false;
+}
