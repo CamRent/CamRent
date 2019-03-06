@@ -1,9 +1,9 @@
-app.component("register", {
-    templateUrl: "components/register.html",
-    controller: "RegisterController"
+app.component("firstRegister", {
+    templateUrl: "components/firstRegister.html",
+    controller: "FirstRegisterController"
 });
 
-app.controller("RegisterController", function ($http) {
+app.controller("FirstRegisterController", function ($http) {
     this.submit = () => {
         let parameter = JSON.stringify({
             email: this.frm_email
