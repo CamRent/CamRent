@@ -216,33 +216,16 @@ function writeIntoUnverifiedEmail(PDO $pdo, $email, $activationcode)
 }
 
 /**
- * returns true if an activationcode matches the email
+ * returns true if an activationcode matches the id
  * @param PDO $pdo
- * @param $email
+ * @param $id
  * @param $activationcode
  * @return bool
  */
-function checkActivationcode(PDO $pdo, $email, $activationcode)
+function checkActivationcode(PDO $pdo, $id, $activationcode)
 {
-    if (returnsAmountOfUnverifiedEmailPerEmail($pdo, $email) == 0) {
-        $user_check_query = "SELECT activationcode FROM unverifiedemail WHERE email = :email";
-        if ($stmt = $pdo->prepare($user_check_query)) {
-            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-            if ($stmt->execute()) {
-                $row = $stmt->fetch();
-                if($row['activationcode'] == $activationcode){
-                    sendSuccess("Item has been added successfully");
-                    return true;
-                }
-                else{
-                    sendError("Sorry, your activationcode is wrong.");
-                    return false;
-                }
-
-            } else {
-                sendError("Something went wrong");
-            }
-        }
+    if(getActivationcode($pdo,$id) == $activationcode){
+        return true;
     }
     return false;
 }
@@ -273,16 +256,17 @@ function returnsAmountOfUnverifiedEmailPerEmail(PDO $pdo, $email)
  * @param $unverifiedEmailId
  * @return int
  */
-function returnActiveStateOfEmail(PDO $pdo, $unverifiedEmailId){
-   $user_check_query = "SELECT * FROM unverifiedemail WHERE PK_unverifiedEmailId = :unverifiedEmailId";
-   if($stmt = $pdo->prepare($user_check_query)){
-       $stmt->bindParam(':unverifiedEmailId',$unverifiedEmailId, PDO::PARAM_STR);
-       if($stmt->execute()){
-           $row = $stmt->fetch();
-           return $row['active'];
-       }
-   }
-   return 0;
+function returnActiveStateOfEmail(PDO $pdo, $unverifiedEmailId)
+{
+    $user_check_query = "SELECT * FROM unverifiedemail WHERE PK_unverifiedEmailId = :unverifiedEmailId";
+    if ($stmt = $pdo->prepare($user_check_query)) {
+        $stmt->bindParam(':unverifiedEmailId', $unverifiedEmailId, PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            $row = $stmt->fetch();
+            return $row['active'];
+        }
+    }
+    return 0;
 }
 
 /**
@@ -290,13 +274,77 @@ function returnActiveStateOfEmail(PDO $pdo, $unverifiedEmailId){
  * @param PDO $pdo
  * @param $unverifiedEmailId
  */
-function makeUnverifiedEmalInactive(PDO $pdo, $unverifiedEmailId){
+function makeUnverifiedEmalInactive(PDO $pdo, $unverifiedEmailId)
+{
     $user_check_query = "UPDATE unverifiedemail SET active = 1 WHERE PK_unverifiedEmailId = :unverifiedEmailId";
-    if($stmt = $pdo->prepare($user_check_query)){
-        $stmt->bindParam(':unverifiedEmailId',$unverifiedEmailId, PDO::PARAM_STR);
-        if($stmt->execute()){
+    if ($stmt = $pdo->prepare($user_check_query)) {
+        $stmt->bindParam(':unverifiedEmailId', $unverifiedEmailId, PDO::PARAM_STR);
+        if ($stmt->execute()) {
             sendSuccess("$unverifiedEmailId became inactive successfully");
         }
     }
     sendError("something went wrong");
+}
+
+/**
+ * returns an activationcode for an unverifiedemailId
+ * @param $pdo
+ * @param $unverifiedEmailId
+ * @return mixed
+ */
+function getActivationcode(PDO $pdo, $unverifiedEmailId)
+{
+    $user_check_query = "SELECT activationcode FROM unverifiedemail WHERE PK_unverifiedEmailId = :unverifiedEmailId";
+    if ($stmt = $pdo->prepare($user_check_query)) {
+        $stmt->bindParam(':unverifiedEmailId', $unverifiedEmailId, PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            $row[] = $stmt->fetch();
+            //sendSuccess("$unverifiedEmailId became inactive successfully");
+            return $row['activationcode'];
+        }
+    }
+    sendError("something went wrong");
+    return 0;
+}
+
+/**
+ * returns an active id for an email
+ * @param PDO $pdo
+ * @param $email
+ * @return mixed
+ */
+function getActiveUnverifiedIdFromEmail(PDO $pdo, $email)
+{
+    $user_check_query = "SELECT * FROM unverifiedemail WHERE email = :email AND active = 1";
+    if ($stmt = $pdo->prepare($user_check_query)) {
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            $row[] = $stmt->fetch();
+            //sendSuccess("$unverifiedEmailId became inactive successfully");
+            return $row['PK_unverifiedEmailId'];
+        }
+    }
+    sendError("something went wrong");
+    return 0;
+}
+
+/**
+ * get email from unverifiedid
+ * @param PDO $pdo
+ * @param $id
+ * @return int
+ */
+function getEmailFromUnverifiedId(PDO $pdo, $id)
+{
+    $user_check_query = "SELECT * FROM unverifiedemail WHERE PK_unverifiedEmailId = :id";
+    if ($stmt = $pdo->prepare($user_check_query)) {
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            $row[] = $stmt->fetch();
+            //sendSuccess("$unverifiedEmailId became inactive successfully");
+            return $row['$email'];
+        }
+    }
+    sendError("something went wrong");
+    return 0;
 }
