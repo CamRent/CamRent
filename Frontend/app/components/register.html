@@ -1,0 +1,31 @@
+<form name="$ctrl.register" method="post" action="../../../Backend/firstRegister.php">
+    <div class="register">
+        <span class="funktions-spezifikation">Registrieren</span>
+        <md-input-container class="input-container">
+            <label>Email</label>
+            <input required type="email" name="email" ng-model="$ctrl.frm_email"
+                   minlength="8" maxlength="100" ng-pattern="/^.+@.+\..+$/"/>
+            <div class="messages" ng-messages="$ctrl.register.email.$error">
+                <div ng-message="pattern">
+                    Bitte geben Sie eine gültige Email-Adresse ein
+                </div>
+                <div ng-message="minlength">
+                    Ihr Email-Adresse muss mindestens 8 Zeichen lang sein
+                </div>
+                <div ng-message="maxlength">
+                    Ihr Email-Adresse darf maximal 100 Zeichen lang sein
+                </div>
+                <div ng-message="required">
+                    Bitte geben Sie eine Email-Adresse ein
+                </div>
+            </div>
+        </md-input-container>
+        <md-button class="md-raised register-button" ng-disabled="$ctrl.register.$invalid" ng-click="$ctrl.submit()">
+            Registrieren
+        </md-button>
+        <div class="info">
+            <br>
+            {{$ctrl.info}}
+        </div>
+    </div>
+</form>
