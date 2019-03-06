@@ -8,7 +8,7 @@ create table items
   description varchar(250) not null
 );
 
-create table user
+create table users
 (
   PK_UserId int auto_increment
     primary key,
