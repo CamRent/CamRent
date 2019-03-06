@@ -10,9 +10,10 @@ require_once "emailConfig.php";
 firstRegister($pdo, $password);
 function firstRegister(PDO $pdo, $password)
 {
-    $email =$_POST['email'];
+    $userdata = getEmail();
+    $email = $userdata['email'];
     $code = generateActivationcode();
     writeIntoUnverifiedEmail($pdo,$email, $code);
-    sendEmail($email, $code, $password);
+    sendEmail($pdo, $email, $code, $password);
     echo("Email has been sent");
 }

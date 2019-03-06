@@ -7,27 +7,28 @@ require '../vendor/phpmailer/PHPMailer/src/PHPMailer.php';
 require '../vendor/phpmailer/PHPMailer/src/SMTP.php';
 
 
-
+require_once "usefulFunctions.php";
+require_once "config.php";
 require_once "../vendor/autoload.php";
 
 
-function sendEmail($email,$activationcode ="test", $password){
+function sendEmail($pdo, $email,$activationcode ="test", $password){
     $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
     try {
         //Server settings
         $mail->SMTPDebug = 1;                                 // Enable verbose debug output
         $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'mail.gmx.net';  // Specify main and backup SMTP servers
+        $mail->Host = 'smtp.gmail.com';    // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'camrent@gmx.at';                 // SMTP username
+        $mail->Username = 'camrenthtl3r@gmail.com';                 // SMTP username
         $mail->Password = $password;                           // SMTP password
-        $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 465;                                    // TCP port to connect to
+        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 587;                                    // TCP port to connect to
 
         //Recipients
-        $mail->setFrom('camrent@gmx.at', 'Mailer');
+        $mail->setFrom('camrenthtl3r@gmail.com', 'Mailer');
         $mail->addAddress($email, 'test');     // Add a recipient
-        $mail->addReplyTo('camrent@gmx.at', 'Information');
+        $mail->addReplyTo('camrenthtl3r@gmail.com', 'Information');
 
         //Attachments
         //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
@@ -36,11 +37,12 @@ function sendEmail($email,$activationcode ="test", $password){
         //Content
         $mail->isHTML(true);                                  // Set email format to HTML
         $mail->Subject = 'Here is the subject';
-        $mail->Body = "Dere <b>$email</b>";
+        $mail->Body = "Link: localhost/camrent/backend/test.php?email=$email&activationcode=$activationcode";
         $mail->AltBody = "Link: localhost/camrent/backend/test.php?email=$email&activationcode=$activationcode";
 
         $mail->send();
-        echo 'Message has been sent';
+        //echo 'Message has been sent';
+        makeUnverifiedEmalInactive($pdo,getActiveUnverifiedIdFromEmail($pdo,$email));
 
     } catch (Exception $e) {
         echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;

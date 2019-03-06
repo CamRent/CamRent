@@ -319,7 +319,7 @@ function getActiveUnverifiedIdFromEmail(PDO $pdo, $email)
     if ($stmt = $pdo->prepare($user_check_query)) {
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         if ($stmt->execute()) {
-            $row[] = $stmt->fetch();
+            $row[] = $stmt->fetchAll();
             //sendSuccess("$unverifiedEmailId became inactive successfully");
             return $row['PK_unverifiedEmailId'];
         }
