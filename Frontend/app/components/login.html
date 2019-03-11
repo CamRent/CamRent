@@ -1,0 +1,47 @@
+<form name="$ctrl.login" method="post" action="../../../Backend/loginUser.php">
+    <div class="login">
+        <span class="funktions-spezifikation">Anmelden</span>
+        <md-input-container class="input-container">
+            <label>Email</label>
+            <input required type="email" name="email" ng-model="$ctrl.frm_email"
+                   minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/"/>
+            <div class="messages" ng-messages="$ctrl.login.email.$error">
+                <div ng-message="pattern">
+                    Bitte geben Sie eine gültige Email-Adresse ein
+                </div>
+                <div ng-message="minlength">
+                    Ihr Email-Adresse muss mindestens 8 Zeichen lang sein
+                </div>
+                <div ng-message="maxlength">
+                    Ihr Email-Adresse darf maximal 100 Zeichen lang sein
+                </div>
+                <div ng-message="required">
+                    Bitte geben Sie eine Email-Adresse ein
+                </div>
+            </div>
+        </md-input-container>
+        <md-input-container class="input-container">
+            <label>Passwort</label>
+            <input required type="password" name="password" ng-model="$ctrl.frm_password"
+                   minlength="6" maxlength="100"/>
+            <div class="messages" ng-messages="$ctrl.login.password.$error">
+                <div ng-message="minlength">
+                    Ihr Passwort muss mindestens 6 Zeichen lang sein
+                </div>
+                <div ng-message="maxlength">
+                    Ihr Passwort darf maximal 100 Zeichen lang sein
+                </div>
+                <div ng-message="required">
+                    Bitte geben Sie ihr Passwort ein
+                </div>
+            </div>
+        </md-input-container>
+        <md-button class="md-raised login-button" ng-disabled="$ctrl.login.$invalid" ng-click="$ctrl.submit()">
+            Einloggen
+        </md-button>
+        <div class="info">
+            <br>
+            {{$ctrl.info}}
+        </div>
+    </div>
+</form>
