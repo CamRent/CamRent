@@ -283,7 +283,7 @@ function makeUnverifiedEmalInactive(PDO $pdo, $unverifiedEmailId)
             sendSuccess("$unverifiedEmailId became inactive successfully");
         }
     }
-    sendError("something went wrong");
+    sendError("makeUnverifiedEmailInactive Error");
 }
 
 /**

@@ -1,6 +1,8 @@
 <?php
 
 require_once "usefulFunctions.php";
+require_once "PHPToJSON.php";
+require_once "JSONToPHP.php";
 
 $userdata = registerJSONToPHP();
 $email = $_GET['email'];

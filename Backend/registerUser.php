@@ -7,11 +7,11 @@ require_once "PHPToJSON.php";
 
 
 registerUser($pdo);
+
 /**
  * registers user if input is valid and user doesnt exist yet
  * @param PDO $pdo
  */
-
 function registerUser(PDO $pdo){
 //reads JSON and writes it into $userdata
     $userdata = registerJSONToPHP();
