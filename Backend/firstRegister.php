@@ -15,5 +15,5 @@ function firstRegister(PDO $pdo, $password)
     $code = generateActivationcode();
     writeIntoUnverifiedEmail($pdo,$email, $code);
     sendEmail($pdo, $email, $code, $password);
-    echo("Email has been sent");
+    //echo("Email has been sent");
 }
