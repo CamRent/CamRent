@@ -1,15 +1,13 @@
-app.component("createProject", {
-    templateUrl: "components/create-project.html",
-    controller: "createProjectController"
+app.component("createGegenstand", {
+    templateUrl: "components/createGegenstand.html",
+    controller: "createGegenstandController"
 });
 
-app.controller("createProjectController", function ($http) {
+app.controller("createGegenstandController", function ($http) {
     this.submit = () => {
         let parameter = JSON.stringify({
             name: this.frm_name,
-            available: ,
-            teacherId: ,
-            description:
+            description: this.frm_description
         });
 
         let url = "../../Backend/usefulFunctions.php";

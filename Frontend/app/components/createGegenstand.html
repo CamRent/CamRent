@@ -1,3 +1,11 @@
 <md-input-container>
-    <input required type="text" name="name" ng-model="$ctrl.frm_name>
+    <label>Name</label>
+    <input required type="text" name="name" ng-model="$ctrl.frm_name">
 </md-input-container>
+
+<md-input-container>
+    <label>Beschreibung</label>
+    <input required type="text" name="description" ng-model="$ctrl.frm_description">
+</md-input-container>
+
+<md-button ng-click="$ctrl.submit()">Erstellen</md-button>

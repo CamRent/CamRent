@@ -1,5 +1,5 @@
 app.component("registerUser", {
-    templateUrl: "components/register.html",
+    templateUrl: "components/registerUser.html",
     controller: "registerUserController"
 });
 

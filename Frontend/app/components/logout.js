@@ -16,6 +16,5 @@ app.controller("LogoutController", function ($log, $http) {
         });
 
         location.reload();
-
     };
 });
