@@ -8,6 +8,18 @@ create table items
   description varchar(250) not null
 );
 
+create table unverifiedemail
+(
+  PK_unverifiedEmailId int auto_increment
+    primary key,
+  email                varchar(100)        not null,
+  activationCode       varchar(100)        not null,
+  date                 date                not null,
+  active               tinyint default '1' null,
+  constraint unverifiedEmail_PK_unverifiedEmailId_uindex
+  unique (PK_unverifiedEmailId)
+);
+
 create table users
 (
   PK_UserId int auto_increment
