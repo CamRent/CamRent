@@ -15,7 +15,8 @@ function registerJSONToPHP()
     $userdata = array(
         "firstname" => $obj['firstname'],
         "surname" => $obj['surname'],
-        "password" => $obj['password']);
+        "password" => $obj['password'],
+        "email" => $obj['email']);
     return $userdata;
 }
 

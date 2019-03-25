@@ -15,8 +15,8 @@ registerUser($pdo);
 function registerUser(PDO $pdo){
 //reads JSON and writes it into $userdata
     $userdata = registerJSONToPHP();
-    $email = $_GET['email'];
-    if(checkActivationcode($pdo, getActiveUnverifiedIdFromEmail($pdo,$email), getActiveUnverifiedIdFromEmail($pdo,$email))) {
+    $email = $userdata['email'];
+    if(checkActivationcode($pdo, getUnverifiedIdFromEmail($pdo,$email), getActivationcode($pdo,getUnverifiedIdFromEmail($pdo,$email)))) {
 
 // Prepare a select statement
         $sql = "SELECT pk_userId FROM users WHERE email = :email";

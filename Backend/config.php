@@ -1,5 +1,4 @@
 <?php
-
 /**
  * simple DB config to connect to DB
  */
@@ -7,7 +6,6 @@ $DB_SERVER = "localhost";
 $DB_USERNAME = "root";
 $DB_PASSWORD = "";
 $DB_NAME = "camrent";
-
 try {
     $pdo = new PDO("mysql:host=" . $DB_SERVER . ";dbname=" . $DB_NAME, $DB_USERNAME, $DB_PASSWORD);
     // Set the PDO error mode to exception
