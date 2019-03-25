@@ -1,0 +1,36 @@
+<style>
+
+    .padded{
+        height: 60px;
+        background-color: cornflowerblue;
+    }
+    #footerid{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row;
+    }
+    
+    #impressum{
+        margin-right: 20%;
+        margin-left: 40%;
+    }
+
+    .unten{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        overflow: hidden;
+    }
+
+</style>
+
+<div class="unten">
+    <div class="padded" md-whiteframe="1" margin-top="auto" layout >
+        <div id="footerid">
+            <div id="impressum">impressum</div>
+            <div>datenschutz</div>
+        </div>
+    </div>
+</div>

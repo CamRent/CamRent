@@ -1,3 +1,33 @@
+<style>
+    .funktions-spezifikation{
+        text-transform: uppercase;
+        margin-bottom: 2%;
+    }
+
+    .register{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+
+    }
+
+    .messages{
+        width: 70px;
+    }
+
+    #registerbutton{
+        width: 13%;
+        background-color: cornflowerblue;
+    }
+    
+    md-input-container.input-container{
+        /*margin-top: -1%;*/
+    }
+
+</style>
+
 <form name="$ctrl.register" method="post" action="../../../Backend/registerUser.php">
     <div class="register">
         <span class="funktions-spezifikation">Registrieren</span>
@@ -75,7 +105,7 @@
             </div>
         </md-input-container>
 
-        <md-button class="md-raised register-button" ng-disabled="$ctrl.register.$invalid" ng-click="$ctrl.submit()">
+        <md-button class="md-raised register-button" id="registerbutton" ng-disabled="$ctrl.register.$invalid" ng-click="$ctrl.submit()">
             Registrieren
         </md-button>
         <div class="info">
