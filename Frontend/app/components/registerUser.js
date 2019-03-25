@@ -7,10 +7,12 @@ app.controller("registerUserController", function($http) {
     let url = document.URL.split("?")[1];
     let email = url.split("&")[0].split("=")[1];
     let activationCode = url.split("&")[1].split("=")[1];
+
     console.log(email);
     console.log(activationCode);
 
     this.submit = () => {
+
         if(this.frm_password !== this.frm_passwordcheck){
             this.info = "Ihre Passwörter stimmen nicht überein";
         }
