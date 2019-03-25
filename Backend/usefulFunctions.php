@@ -236,6 +236,7 @@ function checkActivationcode(PDO $pdo, $id, $activationcode)
  * @param $email
  * @return int
  */
+/*
 function returnsAmountOfUnverifiedEmailPerEmail(PDO $pdo, $email)
 {
     $user_check_query = "SELECT * FROM unverifiedemail WHERE email = :email";
@@ -249,6 +250,7 @@ function returnsAmountOfUnverifiedEmailPerEmail(PDO $pdo, $email)
     sendError("A Problem occurred");
     return 0;
 }
+*/
 
 /**
  * returns an "available" boolean based on an ID
@@ -256,6 +258,7 @@ function returnsAmountOfUnverifiedEmailPerEmail(PDO $pdo, $email)
  * @param $unverifiedEmailId
  * @return int
  */
+/*
 function returnActiveStateOfEmail(PDO $pdo, $unverifiedEmailId)
 {
     $user_check_query = "SELECT * FROM unverifiedemail WHERE PK_unverifiedEmailId = :unverifiedEmailId";
@@ -268,12 +271,13 @@ function returnActiveStateOfEmail(PDO $pdo, $unverifiedEmailId)
     }
     return 0;
 }
-
+*/
 /**
  * make an unverifieddEmail inactive based on ID
  * @param PDO $pdo
  * @param $unverifiedEmailId
  */
+/*
 function makeUnverifiedEmalInactive(PDO $pdo, $unverifiedEmailId)
 {
     $user_check_query = "UPDATE unverifiedemail SET active = 1 WHERE PK_unverifiedEmailId = :unverifiedEmailId";
@@ -285,7 +289,7 @@ function makeUnverifiedEmalInactive(PDO $pdo, $unverifiedEmailId)
     }
     sendError("makeUnverifiedEmailInactive Error");
 }
-
+*/
 /**
  * returns an activationcode for an unverifiedemailId
  * @param $pdo
@@ -313,6 +317,7 @@ function getActivationcode(PDO $pdo, $unverifiedEmailId)
  * @param $email
  * @return mixed
  */
+/*
 function getActiveUnverifiedIdFromEmail(PDO $pdo, $email)
 {
     $user_check_query = "SELECT * FROM unverifiedemail WHERE email = :email AND active = 1";
@@ -321,6 +326,25 @@ function getActiveUnverifiedIdFromEmail(PDO $pdo, $email)
         if ($stmt->execute()) {
             $row[] = $stmt->fetchAll();
             //sendSuccess("$unverifiedEmailId became inactive successfully");
+            return $row['PK_unverifiedEmailId'];
+        }
+    }
+    sendError("something went wrong");
+    return 0;
+}*/
+/**
+ * returns an unverified id for an email
+ * @param PDO $pdo
+ * @param $email
+ * @return mixed
+ */
+function getUnverifiedIdFromEmail(PDO $pdo, $email)
+{
+    $user_check_query = "SELECT * FROM unverifiedemail WHERE email = :email";
+    if ($stmt = $pdo->prepare($user_check_query)) {
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            $row[] = $stmt->fetchAll();
             return $row['PK_unverifiedEmailId'];
         }
     }
