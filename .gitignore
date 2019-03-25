@@ -1,0 +1,4 @@
+vendor/
+Frontend/app/vendor/
+Backend/emailConfig.php
+.idea/
