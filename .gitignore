@@ -146,12 +146,3 @@ typings/
 # next.js build output
 .next
 
-.idea/
-
-vendor/
-
-emailConfig.php
-
-composer.json
-
-composer.lock

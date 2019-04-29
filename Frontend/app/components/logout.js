@@ -17,4 +17,9 @@ app.controller("LogoutController", function ($log, $http, $window) {
 
         $window.location.href = "login.html";
     };
+
+
+    this.status = () => {
+        return false;
+    }
 });
