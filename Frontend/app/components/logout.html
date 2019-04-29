@@ -9,6 +9,7 @@
     }
 </style>
 
-<a class="nav-items" ng-click="$ctrl.submit()">
-    LOGOUT
+<a class="nav-items" ng-click="$ctrl.submit()" ng-switch="$ctrl.status()">
+    <span ng-switch-when="true"> Logout </span>
+    <span ng-switch-when="false"> Login </span>
 </a>
