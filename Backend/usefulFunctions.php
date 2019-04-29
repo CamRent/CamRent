@@ -48,25 +48,6 @@ function generateActivationcode()
     return $pass;
 }
 
-/**
- * add Item to the database
- * @param PDO $pdo
- * @param $item array with useful infos about the item
- */
-function addItem(PDO $pdo, $item)
-{
-    $user_check_query = "INSERT INTO items(name,available,teacherId,description) VALUES (:name,:available,:teacherId,:description)";
-    if ($stmt = $pdo->prepare($user_check_query)) {
-        $stmt->bindParam(':name', $item['name'], PDO::PARAM_STR);
-        $stmt->bindParam(':available', $item['available'], PDO::PARAM_STR);
-        $stmt->bindParam(':teacherId', $item['teacherId'], PDO::PARAM_STR);
-        $stmt->bindParam(':description', $item['description'], PDO::PARAM_STR);
-        if ($stmt->execute()) {
-            sendSuccess("Item has been added successfully");
-        }
-    }
-
-}
 
 /**
  * returns an array with all available items
@@ -114,24 +95,6 @@ function getAllItems(PDO $pdo)
     return $items;
 }
 
-/**
- * checks if an Item exists in the db
- * delete Item from the database
- * @param PDO $pdo
- * @param $itemId integer id of the item we want to delete
- */
-function deleteItem(PDO $pdo, $itemId)
-{
-    if (doesItemExist($pdo, $itemId)) {
-        $user_check_query = "DELETE FROM items WHERE PK_ItemId = :itemId";
-        if ($stmt = $pdo->prepare($user_check_query)) {
-            $stmt->bindParam(':itemId', $itemId, PDO::PARAM_STR);
-            if ($stmt->execute()) {
-                sendSuccess("Item has been deleted successfully");
-            }
-        }
-    }
-}
 
 
 /**

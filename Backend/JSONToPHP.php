@@ -95,3 +95,25 @@ function getEmail()
     $userdata = array("email" => $obj['email']);
     return $userdata;
 }
+
+/**
+ * *gets Input for Item
+ * @return array
+ */
+function createItem(){
+    $json = file_get_contents('php://input');
+    $obj = json_decode($json, true);
+    $userdata = array("name" => $obj['name'],
+        "description" => $obj['description']);
+    return $userdata;
+}
+
+/**
+ * @return array|int
+ */
+function deleteItems(){
+    $json = file_get_contents('php://input');
+    $obj = json_decode($json,true);
+    $userdata = array("itemId" => $obj['itemId']);
+    return $userdata;
+}
