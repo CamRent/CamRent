@@ -3,7 +3,7 @@ app.component("logout", {
     controller: "LogoutController"
 });
 
-app.controller("LogoutController", function ($log, $http) {
+app.controller("LogoutController", function ($log, $http, $window) {
     $log.debug("LogoutController()");
 
     this.submit = () => {
@@ -15,6 +15,6 @@ app.controller("LogoutController", function ($log, $http) {
             url: url
         });
 
-        location.reload();
+        $window.location.href = "login.html";
     };
 });

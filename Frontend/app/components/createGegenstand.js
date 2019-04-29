@@ -10,7 +10,7 @@ app.controller("createGegenstandController", function ($http) {
             description: this.frm_description
         });
 
-        let url = "../../Backend/usefulFunctions.php";
+        let url = "../../Backend/addItem.php";
 
         $http({
             method: 'POST',

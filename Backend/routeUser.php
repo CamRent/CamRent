@@ -8,5 +8,5 @@ $userdata = registerJSONToPHP();
 $email = $_GET['email'];
 $activationcode = $_GET['activationcode'];
 if(checkActivationcode($pdo, getUnverifiedIdFromEmail($pdo,$email), getActivationcode($pdo,getUnverifiedIdFromEmail($pdo,$email)))) {
-    Header("Location: ../Frontend/app/index_registerUser.html?email=$email&activationcode=$activationcode");
+    Header("Location: ../Frontend/app/registerUser.html?email=$email&activationcode=$activationcode");
 }
