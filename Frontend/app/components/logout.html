@@ -6,10 +6,11 @@
         vertical-align: center;
         text-decoration: none;
         text-align: center;
+        cursor: pointer;
     }
 </style>
 
 <a class="nav-items" ng-click="$ctrl.submit()" ng-switch="$ctrl.status">
-    <span ng-switch-when="false"> Logout </span>
-    <span ng-switch-when="true"> Login </span>
+    <span ng-switch-when="true"> Logout </span>
+    <span ng-switch-when="false"> Login </span>
 </a>
