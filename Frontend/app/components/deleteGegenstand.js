@@ -17,8 +17,7 @@ app.controller("deleteGegenstandController", function ($http) {
             data: parameter
         }).then(
             (response) => {
-                console.log(response);
-                this.info = response.data.infotext;
+                console.log(response.data);
             }, function (error) {
                 console.log(error);
             });

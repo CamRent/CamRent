@@ -1,24 +1,21 @@
-app.component("listGegenstand", {
+    app.component("listGegenstand", {
     templateUrl: "components/listGegenstand.html",
     controller: "listGegenstandController"
 });
 
 app.controller("listGegenstandController", function ($http) {
     this.submit = () => {
-        let parameter = JSON.stringify({
-            name: this.frm_name,
-            description: this.frm_description
-        });
 
         let url = "../../Backend/overviewOfAllItems.php";
+        this.items = {};
 
         $http({
             method: 'POST',
-            url: url,
-            data: parameter
+            url: url
         }).then(
             (response) => {
-                console.log(response);
+                console.log(response.data);
+                this.items = response.data;
             }, function (error) {
                 console.log(error);
             });
