@@ -2,12 +2,12 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/phpmailer/PHPMailer/src/Exception.php';
-require 'vendor/phpmailer/PHPMailer/src/PHPMailer.php';
-require 'vendor/phpmailer/PHPMailer/src/SMTP.php';
+require '../vendor/phpmailer/PHPMailer/src/Exception.php';
+require '../vendor/phpmailer/PHPMailer/src/PHPMailer.php';
+require '../vendor/phpmailer/PHPMailer/src/SMTP.php';
 
 require_once "usefulFunctions.php";
-require_once "vendor/autoload.php";
+require_once "../vendor/autoload.php";
 require_once "emailConfig.php";
 
 
@@ -41,7 +41,7 @@ function sendEmail($pdo, $email,$activationcode ="test", $password){
 
         $mail->send();
         //echo 'Message has been sent';
-        makeUnverifiedEmalInactive($pdo,getActiveUnverifiedIdFromEmail($pdo,$email));
+        //makeUnverifiedEmalInactive($pdo,getActiveUnverifiedIdFromEmail($pdo,$email));
 
     } catch (Exception $e) {
         echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
