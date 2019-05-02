@@ -26,6 +26,7 @@ app.controller("LoginController", function($http, $window){
                     console.log(response);
                     this.info = response.data.infotext;
                     let statusCode = response.data.status;
+                    console.log(statusCode);
                     if(statusCode === "201"){
                         $window.location.href = 'profil.html';
                     }

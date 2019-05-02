@@ -85,16 +85,17 @@ function getAllItems(PDO $pdo)
     if ($stmt = $pdo->prepare($user_check_query)) {
         if ($stmt->execute()) {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $items[$count]['ID'] = $row['PK_ItemId'];
                 $items[$count]['name'] = $row['name'];
                 $items[$count]['available'] = $row['available'];
                 $items[$count]['teacherId'] = $row['teacherId'];
                 $items[$count]['description'] = $row['description'];
+                $count++;
             }
         }
     }
     return $items;
 }
-
 
 
 /**
@@ -106,14 +107,13 @@ function getAllItems(PDO $pdo)
 function doesItemExist(PDO $pdo, $itemId)
 {
     $user_check_query = "SELECT PK_ItemId FROM items WHERE PK_ItemId = :itemId";
-    if ($stmt = $pdo->prepare($user_check_query)) {
-        $stmt->bindParam(':itemId', $itemId, PDO::PARAM_STR);
-        if ($stmt->execute()) {
-            $row = $stmt->fetch();
-            if ($row->count() == 1) {
-                return true;
-            }
+    $stmt = $pdo->prepare($user_check_query);
+    $stmt->bindParam(':itemId', $itemId, PDO::PARAM_INT);
+    if ($stmt->execute()) {
+        if ($stmt->rowCount() == 1) {
+            return true;
         }
+        return false;
     }
     return false;
 }
@@ -187,7 +187,7 @@ function writeIntoUnverifiedEmail(PDO $pdo, $email, $activationcode)
  */
 function checkActivationcode(PDO $pdo, $id, $activationcode)
 {
-    if(getActivationcode($pdo,$id) == $activationcode){
+    if (getActivationcode($pdo, $id) == $activationcode) {
         return true;
     }
     return false;

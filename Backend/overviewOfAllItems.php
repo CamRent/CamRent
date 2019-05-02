@@ -1,9 +1,9 @@
 <?php
 require_once "PHPToJSON.php";
 require_once "config.php";
-
+require_once "usefulFunctions.php";
 sendOverwiewOfAllItems(getAllItems($pdo));
-
+/*
 function getAllItems(PDO $pdo)
 {
     $items = array();
@@ -17,8 +17,9 @@ function getAllItems(PDO $pdo)
                 $items[$count]['available'] = $row['available'];
                 $items[$count]['teacherId'] = $row['teacherId'];
                 $items[$count]['description'] = $row['description'];
-            }
+
+}
         }
     }
     return $items;
-}
+}*/
