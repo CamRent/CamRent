@@ -17,7 +17,8 @@ function getAllItems(PDO $pdo)
                 $items[$count]['available'] = $row['available'];
                 $items[$count]['teacherId'] = $row['teacherId'];
                 $items[$count]['description'] = $row['description'];
-            }
+
+}
         }
     }
     return $items;

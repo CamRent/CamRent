@@ -85,6 +85,7 @@ function getAllItems(PDO $pdo)
     if ($stmt = $pdo->prepare($user_check_query)) {
         if ($stmt->execute()) {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $items[$count]['ID'] = $row['PK_ItemId'];
                 $items[$count]['name'] = $row['name'];
                 $items[$count]['available'] = $row['available'];
                 $items[$count]['teacherId'] = $row['teacherId'];
