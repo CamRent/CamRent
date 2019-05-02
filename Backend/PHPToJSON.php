@@ -31,3 +31,11 @@ function isLoggedIn($loginBoolean){
         'isLoggedIn' => $loginBoolean
     )));
 }
+
+/**
+ * returns all Items to the frontend, so the user can choose
+ * @param $items array with all items as a 2d associative array
+ */
+function sendOverwiewOfAllItems($items){
+    echo json_encode($items);
+}
