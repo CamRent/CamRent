@@ -29,6 +29,14 @@ function sendEmail($pdo, $email,$activationcode ="test", $password){
         $mail->addAddress($email, 'test');     // Add a recipient
         $mail->addReplyTo('camrenthtl3r@gmail.com', 'Information');
 
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+
         //Attachments
         //$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
         //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
