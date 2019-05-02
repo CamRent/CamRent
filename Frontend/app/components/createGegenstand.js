@@ -19,7 +19,6 @@ app.controller("createGegenstandController", function ($http) {
         }).then(
             (response) => {
                 console.log(response);
-                this.info = response.data.infotext;
             }, function (error) {
                 console.log(error);
             });

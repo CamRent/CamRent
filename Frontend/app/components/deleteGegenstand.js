@@ -9,7 +9,7 @@ app.controller("deleteGegenstandController", function ($http) {
             itemId: this.frm_itemId
         });
 
-        let url = "../../Backend/usefulFunctions.php";
+        let url = "../../Backend/deleteItem.php";
 
         $http({
             method: 'POST',

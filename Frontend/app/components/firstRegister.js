@@ -17,8 +17,8 @@ app.controller("FirstRegisterController", function ($http) {
             data: parameter
         }).then(
             (response) => {
-                console.log(response);
-                this.info = response.data.infotext;
+                this.info = response.data;
+                console.log(this.info);
             }, function (error) {
                 console.log(error);
             });
