@@ -98,7 +98,6 @@ function getAllItems(PDO $pdo)
 }
 
 
-
 /**
  * return true if an item exists in db
  * @param PDO $pdo
@@ -108,14 +107,13 @@ function getAllItems(PDO $pdo)
 function doesItemExist(PDO $pdo, $itemId)
 {
     $user_check_query = "SELECT PK_ItemId FROM items WHERE PK_ItemId = :itemId";
-    if ($stmt = $pdo->prepare($user_check_query)) {
-        $stmt->bindParam(':itemId', $itemId, PDO::PARAM_STR);
-        if ($stmt->execute()) {
-            $row = $stmt->fetch();
-            if ($row->count() == 1) {
-                return true;
-            }
+    $stmt = $pdo->prepare($user_check_query);
+    $stmt->bindParam(':itemId', $itemId, PDO::PARAM_INT);
+    if ($stmt->execute()) {
+        if ($stmt->rowCount() == 1) {
+            return true;
         }
+        return false;
     }
     return false;
 }
@@ -189,7 +187,7 @@ function writeIntoUnverifiedEmail(PDO $pdo, $email, $activationcode)
  */
 function checkActivationcode(PDO $pdo, $id, $activationcode)
 {
-    if(getActivationcode($pdo,$id) == $activationcode){
+    if (getActivationcode($pdo, $id) == $activationcode) {
         return true;
     }
     return false;
