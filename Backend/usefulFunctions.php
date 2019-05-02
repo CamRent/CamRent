@@ -50,29 +50,6 @@ function generateActivationcode()
 
 
 /**
- * returns an array with all available items
- * @param PDO $pdo
- * @return array 2d array with all available items
- */
-function getAllAvailableItems(PDO $pdo)
-{
-    $count = 0;
-    $items = array();
-    $user_check_query = "SELECT * FROM items WHERE available = 1";
-    if ($stmt = $pdo->prepare($user_check_query)) {
-        if ($stmt->execute()) {
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $items[$count]['name'] = $row['name'];
-                $items[$count]['available'] = $row['available'];
-                $items[$count]['teacherId'] = $row['teacherId'];
-                $items[$count]['description'] = $row['description'];
-            }
-        }
-    }
-    return $items;
-}
-
-/**
  * returns an array with all items
  * @param PDO $pdo
  * @return array $items 2d array with all items
@@ -91,6 +68,34 @@ function getAllItems(PDO $pdo)
                 $items[$count]['teacherId'] = $row['teacherId'];
                 $items[$count]['description'] = $row['description'];
                 $count++;
+            }
+        }
+    }
+    return $items;
+}
+
+
+/**
+ * returns an array with all items
+ * @param PDO $pdo
+ * @return array $items 2d array with all items
+ */
+function getAllAvailableItems(PDO $pdo)
+{
+    $count = 0;
+    $items = array();
+    $user_check_query = "SELECT * FROM items";
+    if ($stmt = $pdo->prepare($user_check_query)) {
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                if ($row['available'] == 0) {
+                    $items[$count]['ID'] = $row['PK_ItemId'];
+                    $items[$count]['name'] = $row['name'];
+                    $items[$count]['available'] = $row['available'];
+                    $items[$count]['teacherId'] = $row['teacherId'];
+                    $items[$count]['description'] = $row['description'];
+                    $count++;
+                }
             }
         }
     }
