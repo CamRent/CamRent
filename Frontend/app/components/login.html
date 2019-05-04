@@ -1,33 +1,37 @@
 <style>
 
-    .funktions-spezifikation{
+    .funktions-spezifikation {
         text-transform: uppercase;
         margin-bottom: 2%;
     }
 
-    .login{
+    .login {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         height: 100vh;
-        
+
     }
 
-    .messages{
+    .messages {
         width: 70px;
     }
 
-    #loginbutton{
+    #loginbutton {
         width: 13%;
         background-color: cornflowerblue;
+    }
+
+    body {
+        background: hsla(43, 60%, 75%, 0.05);
     }
 
 </style>
 
 <form name="$ctrl.login" method="post" action="../../../Backend/loginUser.php">
     <div class="login">
-        <!--<img src="CR_Logo_colour.png">-->
+        <img src="images/CR_Logo_colour.png" height="200">
         <span class="funktions-spezifikation">LOGIN</span>
         <md-input-container class="input-container">
             <label>Email</label>
@@ -64,7 +68,8 @@
                 </div>
             </div>
         </md-input-container>
-        <md-button class="md-raised login-button" id="loginbutton" ng-disabled="$ctrl.login.$invalid" ng-click="$ctrl.submit()">
+        <md-button class="md-raised login-button" id="loginbutton" ng-disabled="$ctrl.login.$invalid"
+                   ng-click="$ctrl.submit()">
             LOGIN
         </md-button>
         <div class="info">

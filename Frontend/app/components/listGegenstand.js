@@ -14,6 +14,13 @@ app.controller("listGegenstandController", function ($http) {
     }).then(
         (response) => {
             console.log(response.data);
+            for (let i = 0; i < response.data.length; i++) {
+                if (response.data[i].available === 1) {
+                    response.data[i].available = "Vergeben";
+                } else {
+                    response.data[i].available = "Frei";
+                }
+            }
             this.items = response.data;
         }, function (error) {
             console.log(error);

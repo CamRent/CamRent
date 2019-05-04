@@ -1,3 +1,23 @@
+<style>
+    .list {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-left: 1em;
+    }
+
+    h2 {
+        padding: 1em;
+    }
+</style>
+
 <h2>Alle Gegenstände: </h2>
 
-<div ng-repeat="x in $ctrl.items"> <h3>{{x.name}}</h3> <br> <p>{{x.description}}</p></div>
+<div ng-repeat="x in $ctrl.items" class="list">
+    <div>
+        <div>{{x.ID}}. {{x.name}}</div>
+        <div>{{x.description}}</div>
+        <div>{{x.available}}</div>
+        <br>
+    </div>
+</div>
