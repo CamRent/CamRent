@@ -3,21 +3,40 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        padding-left: 1em;
+        align-items: center;
+        padding: 2em 2em 2em 20em;
     }
 
-    h2 {
-        padding: 1em;
+    .name {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .beschreibung {
+        width: 200px;
+        font-size: 20px;
+    }
+
+    .title {
+        font-size: 35px;
+        font-weight: bold;
+        padding: 0.5em 0 0 0;
     }
 </style>
 
-<h2>Alle Gegenstände: </h2>
+<div class="title">Alle Gegenstände:</div>
 
-<div ng-repeat="x in $ctrl.items" class="list">
-    <div>
-        <div>{{x.ID}}. {{x.name}}</div>
-        <div>{{x.description}}</div>
-        <div>{{x.available}}</div>
-        <br>
-    </div>
+<div class="list" ng-repeat="x in $ctrl.items">
+    <a ng-click="$ctrl.submit()">
+        <div layout="column">
+            <div class="name">{{x.name}}</div>
+            <div class="beschreibung">{{x.description}}</div>
+            <br>
+            <br>
+        </div>
+    </a>
+
+    <div>{{x.available}}</div>
+
+    <md-button>Ausborgen</md-button>
 </div>

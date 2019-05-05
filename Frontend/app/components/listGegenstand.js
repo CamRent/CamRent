@@ -7,6 +7,7 @@ app.controller("listGegenstandController", function ($http) {
 
     let url = "../../Backend/overviewOfAllItems.php";
     this.items = {};
+    this.fulldescription = {};
 
     $http({
         method: 'POST',
@@ -20,9 +21,20 @@ app.controller("listGegenstandController", function ($http) {
                 } else {
                     response.data[i].available = "Frei";
                 }
+
+                if (response.data[i].description.length > 100) {
+                    this.fulldescription[i] = response.data[i].description;
+                    response.data[i].description = response.data[i].description.slice(0, 100) + " ...";
+                } else {
+
+                }
             }
             this.items = response.data;
         }, function (error) {
             console.log(error);
         });
+
+    this.submit = () => {
+        
+    }
 });
