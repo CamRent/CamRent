@@ -1,15 +1,32 @@
 <style>
+
+    body {
+        color: black;
+    }
+
     .list {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         padding: 2em 2em 2em 20em;
+        border-bottom: black 1px solid;
     }
 
     .name {
         font-size: 30px;
         font-weight: bold;
+    }
+
+    .name:hover {
+        text-decoration: underline;
+        color: black;
+        cursor: pointer;
+    }
+
+    a:hover {
+        color: black;
+        cursor: pointer;
     }
 
     .beschreibung {
@@ -31,12 +48,17 @@
         font-weight: bold;
         font-size: 20px;
     }
+
+    .md-dialog-content {
+        max-width: 400px;
+    }
+
 </style>
 
 <div class="title">Alle Gegenstände:</div>
 
 <div class="list" ng-repeat="x in $ctrl.items">
-    <a ng-click="$ctrl.submit($index)">
+    <a ng-click="$ctrl.submit($index, $event)">
         <div layout="column">
             <div class="name">{{x.name}}</div>
             <div class="beschreibung">{{x.description}}</div>

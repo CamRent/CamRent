@@ -24,7 +24,6 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog) {
 
                 if (response.data[i].description.length > 100) {
                     this.fulldescription[i] = response.data[i].description;
-                    console.log(this.fulldescription[i]);
                     response.data[i].description = response.data[i].description.slice(0, 100) + " ...";
                 } else {
                     this.fulldescription[i] = response.data[i].description;
@@ -35,11 +34,16 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog) {
             console.log(error);
         });
 
-    this.submit = (i) => {
-        $mdDialog.show(
-            $mdDialog.alert()
-                .title(this.items[i].name)
-                .content(this.fulldescription[i])
-        );
+    this.submit = (i, ev) => {
+        if(i !== i) {
+        } else {
+            $mdDialog.show(
+                $mdDialog.alert()
+                    .clickOutsideToClose(true)
+                    .title(this.items[i].name)
+                    .textContent(this.fulldescription[i])
+                    .targetEvent(ev)
+            )
+        }
     };
 });
