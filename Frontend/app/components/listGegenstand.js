@@ -3,7 +3,7 @@ app.component("listGegenstand", {
     controller: "listGegenstandController"
 });
 
-app.controller("listGegenstandController", function ($http) {
+app.controller("listGegenstandController", function ($http, $scope, $mdDialog) {
 
     let url = "../../Backend/overviewOfAllItems.php";
     this.items = {};
@@ -24,9 +24,10 @@ app.controller("listGegenstandController", function ($http) {
 
                 if (response.data[i].description.length > 100) {
                     this.fulldescription[i] = response.data[i].description;
+                    console.log(this.fulldescription[i]);
                     response.data[i].description = response.data[i].description.slice(0, 100) + " ...";
                 } else {
-
+                    this.fulldescription[i] = response.data[i].description;
                 }
             }
             this.items = response.data;
@@ -34,7 +35,11 @@ app.controller("listGegenstandController", function ($http) {
             console.log(error);
         });
 
-    this.submit = () => {
-        
-    }
+    this.submit = (i) => {
+        $mdDialog.show(
+            $mdDialog.alert()
+                .title(this.items[i].name)
+                .content(this.fulldescription[i])
+        );
+    };
 });
