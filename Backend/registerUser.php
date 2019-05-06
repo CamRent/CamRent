@@ -77,7 +77,6 @@ function registerUser(PDO $pdo){
                         }
                     }
                     sendSuccess("Sie wurden erfolgreich registriert.");
-                    header("Location: '../FrontendTests/index.html'");
                 } else {
                     sendError("Ein Fehler ist aufgetreten.");
                 }

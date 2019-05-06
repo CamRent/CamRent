@@ -24,7 +24,6 @@ app.controller("LoginController", function($http, $window){
             }).then(
                 (response) => {
                     console.log(response);
-                    this.info = response.data.infotext;
                     let statusCode = response.data.status;
                     console.log(statusCode);
                     if(statusCode === "201"){

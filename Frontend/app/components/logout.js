@@ -20,7 +20,6 @@ app.controller("LogoutController", function ($log, $http, $window) {
 
                 this.data = response.data;
                 this.status =  this.data.isLoggedIn;
-                console.log(this.status  + "status set");
             })
             .catch(response => {
                 $log.error("Da ist etwas nicht so gut gelaufen: " + response);
