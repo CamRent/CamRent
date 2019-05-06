@@ -3,7 +3,7 @@ app.component("login", {
     controller: "LoginController"
 });
 
-app.controller("LoginController", function($http, $window){
+app.controller("LoginController", function($http, $window, $rootScope){
     this.submit = () => {
         if(this.frm_email === undefined){
             this.info = "Bitte überprüfen Sie ihre Email-Adresse";
@@ -23,10 +23,14 @@ app.controller("LoginController", function($http, $window){
                 data: parameter
             }).then(
                 (response) => {
-                    console.log(response);
-                    let statusCode = response.data.status;
-                    console.log(statusCode);
-                    if(statusCode === "201"){
+                    console.log(response.data);
+                    $rootScope.id = response.data.id;
+                    console.log($rootScope.id);
+                    $rootScope.firstname = response.data.firstname;
+                    $rootScope.surname = response.data.surname;
+                    $rootScope.priority = response.data.priority;
+                    $rootScope.email = response.data.email;
+                    if($rootScope.id !== undefined){
                         $window.location.href = 'profil.html';
                     }
                 }, function (error) {

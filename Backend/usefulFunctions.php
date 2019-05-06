@@ -25,10 +25,9 @@ function saveIntoSession($row)
     $_SESSION['email'] = $row['email'];
     $_SESSION['firstname'] = $row['firstname'];
     $_SESSION['surname'] = $row['surname'];
-    $_SESSION['userId'] = $row['pk_userId'];
-    $_SESSION['priority'] = $row['priority'];
+    $_SESSION['userId'] = $row['PK_UserId'];
+    $_SESSION['priority'] = 0;
 }
-
 
 /**
  * generates an activationcode and saves it into the db

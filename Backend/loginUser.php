@@ -19,7 +19,7 @@ function LoginUser(PDO $pdo){
     $password = trim($userdata['password']);
 
 // Prepare a select statement
-    $sql = "SELECT pk_userId, email, password, firstname, surname FROM users WHERE email = :email";
+    $sql = "SELECT PK_UserId, email, password, firstname, surname, priority FROM users WHERE email = :email";
     if ($stmt = $pdo->prepare($sql)) {
         // Bind variables to the prepared statement as parameters
         $param_email = $userdata['email'];
