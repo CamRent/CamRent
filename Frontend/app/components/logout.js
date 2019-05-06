@@ -19,7 +19,8 @@ app.controller("LogoutController", function ($log, $http, $window) {
                 $log.debug("Response = ", response);
 
                 this.data = response.data;
-                this.status =  this.data.isLoggedIn;
+                this.statusCode = response.data.status;
+                this.status = this.data.isLoggedIn;
             })
             .catch(response => {
                 $log.error("Da ist etwas nicht so gut gelaufen: " + response);
@@ -27,14 +28,10 @@ app.controller("LogoutController", function ($log, $http, $window) {
     };
 
 
-
-
-
-
     this.submit = () => {
 
         this.getStatus();
-        if (this.status)  {
+        if (this.status) {
             let url = "../../Backend/logoutUser.php";
 
             $http({
@@ -42,7 +39,9 @@ app.controller("LogoutController", function ($log, $http, $window) {
                 url: url
             });
 
-            $window.location.href = "index.html";
+            if (this.statusCode === "201") {
+                $window.location.href = "index.html";
+            }
 
 
         }
@@ -51,10 +50,7 @@ app.controller("LogoutController", function ($log, $http, $window) {
         }
 
 
-
-
     };
-
 
 
 });
