@@ -37,7 +37,7 @@ function LoginUser(PDO $pdo){
                         saveIntoSession($row);
                         setLastLogin($pdo);
                         sendUserdata($row['PK_UserId'],$row['firstname'], $row['surname'],$row['priority'],$row['email']);
-                        sendSuccess("Sie wurden erfolgreich eingeloggt.");
+                        //sendSuccess("Sie wurden erfolgreich eingeloggt.");
 
                     } else {
                         // Send an error message if password is not valid
