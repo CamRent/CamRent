@@ -27,34 +27,17 @@ app.controller("LogoutController", function ($log, $http, $window) {
     };
 
 
-
-
-
-
     this.submit = () => {
-
         this.getStatus();
         if (this.status)  {
-            let url = "../../Backend/logoutUser.php";
-
-            $http({
-                method: 'POST',
-                url: url
-            });
-
-            $window.location.href = "index.html";
-
-
-        }
+            $http
+                .get('../../Backend/logoutUser.php')
+                .then(response => {
+                    $log.debug("Response = ", response);
+                    $window.location.href = "index.html";
+                })}
         else {
             $window.location.href = "login.html";
         }
-
-
-
-
     };
-
-
-
 });
