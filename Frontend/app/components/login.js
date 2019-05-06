@@ -25,7 +25,6 @@ app.controller("LoginController", function($http, $window, $rootScope){
                 (response) => {
                     console.log(response.data);
                     $rootScope.id = response.data.id;
-                    console.log($rootScope.id);
                     $rootScope.firstname = response.data.firstname;
                     $rootScope.surname = response.data.surname;
                     $rootScope.priority = response.data.priority;
