@@ -36,6 +36,7 @@ function LoginUser(PDO $pdo){
                         save the email, firstname, surname to the session for later use*/
                         saveIntoSession($row);
                         setLastLogin($pdo);
+                        sendUserdata($row['PK_UserId'],$row['firstname'], $row['surname'],$row['priority'],$row['email']);
                         sendSuccess("Sie wurden erfolgreich eingeloggt.");
 
                     } else {
