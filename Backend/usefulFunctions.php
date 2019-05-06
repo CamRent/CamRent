@@ -1,6 +1,9 @@
 <?php
 require_once "config.php";
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 /**
  * A simple script to write the current date into users table as lastLogin
  * @param $pdo
@@ -22,6 +25,9 @@ function setLastLogin(PDO $pdo)
  */
 function saveIntoSession($row)
 {
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
     $_SESSION['email'] = $row['email'];
     $_SESSION['firstname'] = $row['firstname'];
     $_SESSION['surname'] = $row['surname'];
