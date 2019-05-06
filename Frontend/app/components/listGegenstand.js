@@ -35,7 +35,7 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog) {
         });
 
     this.submit = (i, ev) => {
-        if(i !== i) {
+        if (i !== i) {
         } else {
             $mdDialog.show(
                 $mdDialog.alert()
@@ -46,4 +46,22 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog) {
             )
         }
     };
+
+    this.ausleihen = (id) => {
+        let parameter = JSON.stringify({
+            userId: $rootScope.id,
+            itemId: id
+        });
+
+        let url = "../../Backend/rentItem.php";
+
+        $http({
+            method: 'POST',
+            url: url,
+            data: parameter
+        }).then(
+            (response) => {
+
+            })
+    }
 });
