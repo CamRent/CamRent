@@ -1,6 +1,9 @@
 <?php
 require_once "config.php";
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 /**
  * A simple script to write the current date into users table as lastLogin
  * @param $pdo
