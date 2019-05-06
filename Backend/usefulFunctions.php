@@ -275,9 +275,10 @@ function getActivationcode(PDO $pdo, $unverifiedEmailId)
     if ($stmt = $pdo->prepare($user_check_query)) {
         $stmt->bindParam(':unverifiedEmailId', $unverifiedEmailId, PDO::PARAM_STR);
         if ($stmt->execute()) {
-            $row[] = $stmt->fetch();
-            //sendSuccess("$unverifiedEmailId became inactive successfully");
-            return $row['activationcode'];
+            if ($row = $stmt->fetch()) {
+                //sendSuccess("$unverifiedEmailId became inactive successfully");
+                return $row['activationcode'];
+            }
         }
     }
     sendError("something went wrong");
@@ -317,8 +318,9 @@ function getUnverifiedIdFromEmail(PDO $pdo, $email)
     if ($stmt = $pdo->prepare($user_check_query)) {
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         if ($stmt->execute()) {
-            $row[] = $stmt->fetchAll();
-            return $row['PK_unverifiedEmailId'];
+            if ($row = $stmt->fetch()) {
+                return $row['PK_unverifiedEmailId'];
+            }
         }
     }
     sendError("something went wrong");
