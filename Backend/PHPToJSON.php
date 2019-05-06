@@ -39,3 +39,17 @@ function isLoggedIn($loginBoolean){
 function sendOverwiewOfAllItems($items){
     echo json_encode($items);
 }
+
+/**
+ * Gives back regular JSON if a success occurs, has an "infotext"
+ * @param $successText
+ */
+function sendUserdata($id, $firstname, $surname, $priority, $email){
+    echo json_encode(array(
+        'id' => $id,
+        'firstname' => $firstname,
+        'surname' => $surname,
+        'priority' => $priority,
+        'email' => $email
+    ));
+}
