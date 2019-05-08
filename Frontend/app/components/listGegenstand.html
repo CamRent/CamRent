@@ -11,6 +11,7 @@
         align-items: center;
         padding: 2em 2em 2em 20em;
         border-bottom: black 1px solid;
+
     }
 
     .name {
@@ -37,7 +38,7 @@
     .title {
         font-size: 35px;
         font-weight: bold;
-        padding: 0.5em 0 0 0;
+        padding: 5em 0 0 0;
     }
 
     .ausleihen {
@@ -53,21 +54,29 @@
         max-width: 400px;
     }
 
+    .container {
+        padding-bottom: 2em;
+    }
+
 </style>
 
 <div class="title">Alle Gegenstände:</div>
 
-<div class="list" ng-repeat="x in $ctrl.items">
-    <a ng-click="$ctrl.submit($index, $event)">
-        <div layout="column">
-            <div class="name">{{x.name}}</div>
-            <div class="beschreibung">{{x.description}}</div>
-            <br>
-            <br>
-        </div>
-    </a>
+<div class="container">
 
-    <div class="status">{{x.available}}</div>
+    <div class="list" ng-repeat="x in $ctrl.items">
+        <a ng-click="$ctrl.submit($index, $event)">
+            <div layout="column">
+                <div class="name">{{x.name}}</div>
+                <br>
+                <div class="beschreibung">{{x.description}}</div>
+                <br>
+                <br>
+            </div>
+        </a>
 
-    <md-button class="ausleihen">Ausleihen</md-button>
+        <div class="status">{{x.available}}</div>
+
+        <md-button class="ausleihen" ng-click="$ctrl.ausleihen(x.ID)">Ausleihen</md-button>
+    </div>
 </div>

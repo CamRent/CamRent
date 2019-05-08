@@ -30,9 +30,12 @@ app.controller("registerUserController", function ($http, $window) {
             }).then(
                 (response) => {
                     console.log(response.data);
-                    let statusCode = response.data.status;
-                    console.log(statusCode);
-                    if(statusCode === "201") {
+                    $rootScope.id = response.data.id;
+                    $rootScope.firstname = response.data.firstname;
+                    $rootScope.surname = response.data.surname;
+                    $rootScope.priority = response.data.priority;
+                    $rootScope.email = response.data.email;
+                    if($rootScope.id !== undefined) {
                         $window.location.href = 'index.html';
                     }
                 }, function (error) {

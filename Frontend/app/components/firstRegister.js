@@ -3,7 +3,7 @@ app.component("firstRegister", {
     controller: "FirstRegisterController"
 });
 
-app.controller("FirstRegisterController", function ($http) {
+app.controller("FirstRegisterController", function ($http, $window) {
     this.submit = () => {
         let parameter = JSON.stringify({
             email: this.frm_email
@@ -17,8 +17,8 @@ app.controller("FirstRegisterController", function ($http) {
             data: parameter
         }).then(
             (response) => {
-                this.info = response.data;
-                console.log(this.info);
+                this.info = "Es wurde Ihnen eine Email gesendet!";
+
             }, function (error) {
                 console.log(error);
             });

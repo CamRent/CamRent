@@ -1,23 +1,37 @@
 <style>
 
+    .parent  {
+        position: fixed;
+        width: 100%;
+        z-index: +2;
+
+    }
+
     .nav-bar {
         display: flex;
         justify-content: space-between;
         background: #9AACE6;
         padding: 2em;
+
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
     }
 
     .nav-items {
         color: black;
         font-family: 'Lato', sans-serif;
         font-size: 30px;
+
         vertical-align: center;
         text-decoration: none;
         text-align: center;
         cursor: pointer;
     }
 
-    a:hover {
+    .nav-items:hover {
         color: white;
     }
 
@@ -25,12 +39,14 @@
         text-align: center;
     }
 </style>
+<div class="parent">
 <div class="nav-bar">
     <img src="images/CR_Logo_colour.png" height="60"/>
-    <a class="nav-items" href="index.html">Home</a>
-    <a class="nav-items" href="profil.html">Profil</a>
+        <a class="nav-items" href="index.html">Home</a>
+        <a class="nav-items" href="profil.html">Profil</a>
     <div>
         <login></login>
         <logout></logout>
     </div>
+</div>
 </div>

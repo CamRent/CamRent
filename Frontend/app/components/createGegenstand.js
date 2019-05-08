@@ -7,7 +7,8 @@ app.controller("createGegenstandController", function ($http) {
     this.submit = () => {
         let parameter = JSON.stringify({
             name: this.frm_name,
-            description: this.frm_description
+            description: this.frm_description,
+            teacherId: $rootScope.id
         });
 
         let url = "../../Backend/addItem.php";

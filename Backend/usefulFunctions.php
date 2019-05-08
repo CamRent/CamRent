@@ -1,6 +1,5 @@
 <?php
 require_once "config.php";
-
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -18,7 +17,6 @@ function setLastLogin(PDO $pdo)
     $stmt->execute();
     $_SESSION['date'] = date("Y-m-d");
 }
-
 /**
  * sets $_SESSION array with current relevant userdata
  * @param $row
@@ -34,7 +32,6 @@ function saveIntoSession($row)
     $_SESSION['userId'] = $row['PK_UserId'];
     $_SESSION['priority'] = 0;
 }
-
 /**
  * generates an activationcode and saves it into the db
  */
@@ -52,8 +49,6 @@ function generateActivationcode()
     }
     return $pass;
 }
-
-
 /**
  * returns an array with all items
  * @param PDO $pdo
@@ -78,8 +73,6 @@ function getAllItems(PDO $pdo)
     }
     return $items;
 }
-
-
 /**
  * returns an array with all items
  * @param PDO $pdo
@@ -106,8 +99,6 @@ function getAllAvailableItems(PDO $pdo)
     }
     return $items;
 }
-
-
 /**
  * return true if an item exists in db
  * @param PDO $pdo
@@ -127,9 +118,17 @@ function doesItemExist(PDO $pdo, $itemId)
     }
     return false;
 }
-
-
-
+/**
+ * user can rent/lend items, which changes their availability status
+ * @param PDO $pdo
+ * @param $itemdId
+ */
+function rentItem(PDO $pdo, $itemId)
+{
+    if (doesItemExist($pdo, $itemId)) {
+        $user_check_query = "";
+    }
+}
 /**
  * checks if a given item is available judging by their availability tinyint
  * @param PDO $pdo
@@ -156,7 +155,6 @@ function isItemAvailable(PDO $pdo, $itemId)
     }
     return false;
 }
-
 /**
  * writes an email and a matching activationcode into the unverifiedEmail Table
  * @param PDO $pdo
@@ -170,14 +168,12 @@ function writeIntoUnverifiedEmail(PDO $pdo, $email, $activationcode)
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':activationcode', $activationcode, PDO::PARAM_STR);
         if ($stmt->execute()) {
-
             sendSuccess("Item has been added successfully");
         } else {
             sendError("Something went wrong");
         }
     }
 }
-
 /**
  * returns true if an activationcode matches the id
  * @param PDO $pdo
@@ -192,9 +188,6 @@ function checkActivationcode(PDO $pdo, $id, $activationcode)
     }
     return false;
 }
-
-
-
 /**
  * returns the number of email adresses current in unverifiedEmail per email
  * @param PDO $pdo
@@ -216,7 +209,6 @@ function returnsAmountOfUnverifiedEmailPerEmail(PDO $pdo, $email)
     return 0;
 }
 */
-
 /**
  * returns an "available" boolean based on an ID
  * @param PDO $pdo
@@ -267,15 +259,15 @@ function getActivationcode(PDO $pdo, $unverifiedEmailId)
     if ($stmt = $pdo->prepare($user_check_query)) {
         $stmt->bindParam(':unverifiedEmailId', $unverifiedEmailId, PDO::PARAM_STR);
         if ($stmt->execute()) {
-            $row[] = $stmt->fetch();
-            //sendSuccess("$unverifiedEmailId became inactive successfully");
-            return $row['activationcode'];
+            if ($row = $stmt->fetch()) {
+                //sendSuccess("$unverifiedEmailId became inactive successfully");
+                return $row['activationcode'];
+            }
         }
     }
     sendError("something went wrong");
     return 0;
 }
-
 /**
  * returns an active id for an email
  * @param PDO $pdo
@@ -309,14 +301,14 @@ function getUnverifiedIdFromEmail(PDO $pdo, $email)
     if ($stmt = $pdo->prepare($user_check_query)) {
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         if ($stmt->execute()) {
-            $row[] = $stmt->fetchAll();
-            return $row['PK_unverifiedEmailId'];
+            if ($row = $stmt->fetch()) {
+                return $row['PK_unverifiedEmailId'];
+            }
         }
     }
     sendError("something went wrong");
     return 0;
 }
-
 /**
  * get email from unverifiedid
  * @param PDO $pdo
