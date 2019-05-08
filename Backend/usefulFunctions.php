@@ -128,17 +128,7 @@ function doesItemExist(PDO $pdo, $itemId)
     return false;
 }
 
-/**
- * user can rent/lend items, which changes their availability status
- * @param PDO $pdo
- * @param $itemdId
- */
-function rentItem(PDO $pdo, $itemId)
-{
-    if (doesItemExist($pdo, $itemId)) {
-        $user_check_query = "";
-    }
-}
+
 
 /**
  * checks if a given item is available judging by their availability tinyint
@@ -202,6 +192,8 @@ function checkActivationcode(PDO $pdo, $id, $activationcode)
     }
     return false;
 }
+
+
 
 /**
  * returns the number of email adresses current in unverifiedEmail per email
