@@ -6,13 +6,13 @@ require_once "JSONToPHP.php";
 $temp = rentItems();
 $itemId = $temp["itemId"];
 
-$date = date("Y-m-d");
-$date_end = date('Y-m-d', strtotime($date. ' + 14 days'));
+$begin_date = date("Y-m-d");
+$date_end = date('Y-m-d', strtotime($begin_date. ' + 14 days'));
 
 /**
  * user can rent/lend items, which changes their availability status
  * @param PDO $pdo
- * @param $itemdId
+ * @param $itemId
  */
 function rentItem(PDO $pdo, $itemId){
     if (doesItemExist($pdo, $itemId)) {
@@ -32,10 +32,11 @@ function rentItem(PDO $pdo, $itemId){
         }
         // $userId = $userdata['userId'];
         if ($stmt2 = $pdo->prepare($sql2)) {
-            $stmt2->bindParam(':begin_date', $date, PDO::PARAM_STR);
+            $stmt2->bindParam(':begin_date', $begin_date, PDO::PARAM_);
             $stmt2->bindParam(':end_date', $date_end, PDO::PARAM_STR);
             $stmt2->bindParam(':teacherId', $teacherId, PDO::PARAM_STR);
             $stmt2->bindParam(':PK_UserId', $param_surname, PDO::PARAM_STR);
+            $stmt2->bindParam(':PK_ItemId',$itemId,PDO::PARAM_INT);
             $stmt2->execute();
         }
         if($stmt1->execute()){
