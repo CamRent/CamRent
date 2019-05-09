@@ -65,7 +65,7 @@
 <div class="container">
 
     <div class="list" ng-repeat="x in $ctrl.items">
-        <a ng-click="$ctrl.submit($index, $event)">
+        <a ng-click="$ctrl.submit($index, x.ID, $event)">
             <div layout="column">
                 <div class="name">{{x.name}}</div>
                 <br>

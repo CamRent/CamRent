@@ -34,17 +34,43 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog, U
             console.log(error);
         });
 
-    this.submit = (i, ev) => {
-        if (i !== i) {
-        } else {
-            $mdDialog.show(
-                $mdDialog.alert()
-                    .clickOutsideToClose(true)
-                    .title(this.items[i].name)
-                    .textContent(this.fulldescription[i])
-                    .targetEvent(ev)
-            )
-        }
+    this.submit = (i, itemId, ev) => {
+        this.Userdata = UserdataService.laden();
+        this.UserId = parseInt(this.Userdata[0]);
+
+        let parameter = JSON.stringify({
+            userId: this.UserId,
+            itemId: itemId
+        });
+
+        let url = "../../Backend/switchBorrowDelete.php";
+
+        $http({
+            method: 'POST',
+            url: url,
+            data: parameter
+        }).then(
+            (response) => {
+                if (response.data.bool === true) {
+                    $mdDialog.show(
+                        $mdDialog.alert()
+                            .clickOutsideToClose(true)
+                            .title(this.items[i].name)
+                            .textContent(this.fulldescription[i])
+                            .targetEvent(ev)
+                            .ok(Delete)
+                    )
+                } else {
+                    $mdDialog.show(
+                        $mdDialog.alert()
+                            .clickOutsideToClose(true)
+                            .title(this.items[i].name)
+                            .textContent(this.fulldescription[i])
+                            .targetEvent(ev)
+                            .ok(Ausborgen)
+                    )
+                }
+            });
     };
 
     this.ausleihen = (id) => {

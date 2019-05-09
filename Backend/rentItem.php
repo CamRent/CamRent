@@ -3,17 +3,15 @@ require_once "config.php";
 require_once "usefulFunctions.php";
 require_once "JSONToPHP.php";
 
-$temp = rentItems();
-$itemId = $temp["itemId"];
-
-$begin_date = date("Y-m-d");
-$date_end = date('Y-m-d', strtotime($begin_date. ' + 14 days'));
-
 /**
  * user can rent/lend items, which changes their availability status
  * @param PDO $pdo
  * @param $itemId
  */
+
+$temp = rentItems();
+$itemId = $temp["itemId"];
+
 function rentItem(PDO $pdo, $itemId){
     if (doesItemExist($pdo, $itemId)) {
         //select Item to change
@@ -32,16 +30,22 @@ function rentItem(PDO $pdo, $itemId){
         }
         // $userId = $userdata['userId'];
         if ($stmt2 = $pdo->prepare($sql2)) {
-            $stmt2->bindParam(':begin_date', $begin_date, PDO::PARAM_);
+            $begin_date = date("Y-m-d");
+            $date_end = date('Y-m-d', strtotime($begin_date. ' + 14 days'));
+            $temp = rentItems();
+            $itemId = $temp["itemId"];
+            $userId = $temp["userId"];
+
+            $stmt2->bindParam(':begin_date', $begin_date, PDO::PARAM_STR);
             $stmt2->bindParam(':end_date', $date_end, PDO::PARAM_STR);
             $stmt2->bindParam(':teacherId', $teacherId, PDO::PARAM_STR);
-            $stmt2->bindParam(':PK_UserId', $param_surname, PDO::PARAM_STR);
+            $stmt2->bindParam(':PK_UserId', $userId, PDO::PARAM_STR);
             $stmt2->bindParam(':PK_ItemId',$itemId,PDO::PARAM_INT);
             $stmt2->execute();
         }
         if($stmt1->execute()){
             while ($row = $stmt1->fetch(PDO::FETCH_ASSOC)) {
-                if ($row['available'] == 0) {
+                if ($row['teacherId'] !== null) {
                     $sql1->execute();
                 }
             }
