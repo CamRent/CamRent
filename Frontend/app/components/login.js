@@ -3,7 +3,7 @@ app.component("login", {
     controller: "LoginController"
 });
 
-app.controller("LoginController", function($http, $window, $rootScope){
+app.controller("LoginController", function($http, $window, UserdataService){
     this.submit = () => {
         if(this.frm_email === undefined){
             this.info = "Bitte überprüfen Sie ihre Email-Adresse";
@@ -23,13 +23,10 @@ app.controller("LoginController", function($http, $window, $rootScope){
                 data: parameter
             }).then(
                 (response) => {
-                    console.log(response.data);
-                    $rootScope.id = response.data.id;
-                    $rootScope.firstname = response.data.firstname;
-                    $rootScope.surname = response.data.surname;
-                    $rootScope.priority = response.data.priority;
-                    $rootScope.email = response.data.email;
-                    if($rootScope.id !== undefined){
+
+                    UserdataService.speichern(response.data.id, response.data.firstname, response.data.surname, response.data.priority, response.data.email);
+
+                    if(response.data.id !== undefined){
                         $window.location.href = 'profil.html';
                     }
                 }, function (error) {

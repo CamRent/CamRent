@@ -123,12 +123,15 @@ function doesItemExist(PDO $pdo, $itemId)
  * @param PDO $pdo
  * @param $itemdId
  */
+
+/*
 function rentItem(PDO $pdo, $itemId)
 {
     if (doesItemExist($pdo, $itemId)) {
         $user_check_query = "";
     }
 }
+*/
 /**
  * checks if a given item is available judging by their availability tinyint
  * @param PDO $pdo

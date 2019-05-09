@@ -30,12 +30,10 @@ app.controller("registerUserController", function ($http, $window) {
             }).then(
                 (response) => {
                     console.log(response.data);
-                    $rootScope.id = response.data.id;
-                    $rootScope.firstname = response.data.firstname;
-                    $rootScope.surname = response.data.surname;
-                    $rootScope.priority = response.data.priority;
-                    $rootScope.email = response.data.email;
-                    if($rootScope.id !== undefined) {
+
+                    UserdataService.speichern(response.data);
+
+                    if(response.data.id !== undefined){
                         $window.location.href = 'index.html';
                     }
                 }, function (error) {

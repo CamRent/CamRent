@@ -3,7 +3,7 @@ app.component("listGegenstand", {
     controller: "listGegenstandController"
 });
 
-app.controller("listGegenstandController", function ($http, $scope, $mdDialog) {
+app.controller("listGegenstandController", function ($http, $scope, $mdDialog, UserdataService) {
 
     let url = "../../Backend/overviewOfAllItems.php";
     this.items = {};
@@ -48,8 +48,15 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog) {
     };
 
     this.ausleihen = (id) => {
+
+        this.Userdata = UserdataService.laden();
+        this.UserId = parseInt(this.Userdata[0]);
+
+        console.log(this.UserId);
+        console.log(id);
+
         let parameter = JSON.stringify({
-            userId: $rootScope.id,
+            userId: this.UserId,
             itemId: id
         });
 
@@ -61,7 +68,7 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog) {
             data: parameter
         }).then(
             (response) => {
-
+                console.log(response.data);
             })
     }
 });
