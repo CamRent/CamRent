@@ -4,11 +4,10 @@ require_once "usefulFunctions.php";
 require_once "JSONToPHP.php";
 
 $temp = rentItems();
-$itemId = $temp[1];
+$itemId = $temp["itemId"];
 
 $date = date("Y-m-d");
-$date_end = $date + 14;
-
+$date_end = date('Y-m-d', strtotime($date. ' + 14 days'));
 
 /**
  * user can rent/lend items, which changes their availability status
@@ -27,7 +26,10 @@ function rentItem(PDO $pdo, $itemId){
         $sql1->bindParam(':itemId', $itemId,PDO::PARAM_INT);
         //writing into borrow table
         $sql2 = "INSERT INTO borrow (begin_date, end_date, teacherId, PK_UserId, PK_ItemId) VALUES (:begin_date, :end_date, :teacherId, :PK_UserId, :PK_ItemId)";
-        $teacherId = $stmt1['teacherId'];
+        if ($stmt1->execute()) {
+            $row = $stmt1->fetch();
+            $teacherId = $row["teacherId"];
+        }
         // $userId = $userdata['userId'];
         if ($stmt2 = $pdo->prepare($sql2)) {
             $stmt2->bindParam(':begin_date', $date, PDO::PARAM_STR);
