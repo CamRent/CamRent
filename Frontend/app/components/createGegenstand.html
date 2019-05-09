@@ -1,11 +1,24 @@
-<md-input-container>
-    <label>Name</label>
-    <input required type="text" name="name" ng-model="$ctrl.frm_name">
-</md-input-container>
+<style>
 
-<md-input-container>
-    <label>Beschreibung</label>
-    <input required type="text" name="description" ng-model="$ctrl.frm_description">
-</md-input-container>
+    .createProject  .md-fab {
+        position: fixed;
+        bottom: 2.5rem;
+        right: 0;
+    }
 
-<md-button ng-click="$ctrl.submit()">Erstellen</md-button>
+    .createProject .plus {
+        position: center;
+        font-size: 40px;
+    }
+
+</style>
+
+<div class="createProject">
+
+    <md-button class="md-fab" style="background: #9AACE6; color: white;" ng-click="$ctrl.submit()">
+        <div class="plus">
+            +
+        </div>
+    </md-button>
+
+</div>

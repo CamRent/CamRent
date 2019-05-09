@@ -23,7 +23,7 @@ function addItem(PDO $pdo, $item)
     if ($stmt = $pdo->prepare($user_check_query)) {
         $stmt->bindParam(':name', $item['name'], PDO::PARAM_STR);
         /* $stmt->bindParam(':available', $item['available'], PDO::PARAM_STR);*/
-        $stmt->bindParam(':teacherId', $item['teacherId'], PDO::PARAM_STR);
+        $stmt->bindParam(':teacherid', $item['teacherid'], PDO::PARAM_INT);
         $stmt->bindParam(':description', $item['description'], PDO::PARAM_STR);
         if ($stmt->execute()) {
             sendSuccess("Item has been added successfully");

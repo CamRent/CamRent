@@ -108,7 +108,7 @@ function createItem(){
     $obj = json_decode($json, true);
     $userdata = array("name" => $obj['name'],
         "description" => $obj['description'],
-        "teacherid" => $obj['teacherid']);
+        "teacherId" => $obj['teacherId']);
     return $userdata;
 }
 
