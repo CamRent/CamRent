@@ -123,9 +123,20 @@ function deleteItems(){
 
 /*
  * get Input to rent an Item
- * @return item
+ * @return array
  */
 function rentItems(){
+    $json = file_get_contents('php://input');
+    $obj = json_decode($json,true);
+    $userdata = array("userId" => $obj['userId'],
+        "itemId" => $obj['itemId']);
+    return $userdata;
+}
+
+/*
+ * @return array
+ */
+function switchBorrowDeletes(){
     $json = file_get_contents('php://input');
     $obj = json_decode($json,true);
     $userdata = array("userId" => $obj['userId'],
