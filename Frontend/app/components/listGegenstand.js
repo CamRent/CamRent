@@ -3,7 +3,7 @@ app.component("listGegenstand", {
     controller: "listGegenstandController"
 });
 
-app.controller("listGegenstandController", function ($http, $scope, $mdDialog, UserdataService) {
+app.controller("listGegenstandController", function ($http, $scope, $mdDialog, UserdataService, $window) {
 
     let url = "../../Backend/overviewOfAllItems.php";
     this.items = {};
@@ -51,50 +51,77 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog, U
             data: parameter
         }).then(
             (response) => {
+
+                console.log(response.data.bool);
+
                 if (response.data.bool === true) {
+                    console.log("adas");
                     $mdDialog.show(
                         $mdDialog.alert()
                             .clickOutsideToClose(true)
                             .title(this.items[i].name)
                             .textContent(this.fulldescription[i])
                             .targetEvent(ev)
-                            .ok(Delete)
+                            .ok("Löschen")
+                    ).then(
+                        this.delete = () => {
+                            let parameter = JSON.stringify({
+                                itemId: this.frm_itemId
+                            });
+
+                            let url = "../../Backend/deleteItem.php";
+
+                            $http({
+                                method: 'POST',
+                                url: url,
+                                data: parameter
+                            }).then(
+                                (response) => {
+                                    console.log(response.data);
+                                }, function (error) {
+                                    console.log(error);
+                                });
+                        }
                     )
+
                 } else {
+                    console.log("adas1");
                     $mdDialog.show(
                         $mdDialog.alert()
                             .clickOutsideToClose(true)
                             .title(this.items[i].name)
                             .textContent(this.fulldescription[i])
                             .targetEvent(ev)
-                            .ok(Ausborgen)
+                            .ok("Ausborgen")
+                    ).then(
+                        this.ausleihen = (id) => {
+
+                            this.Userdata = UserdataService.laden();
+                            this.UserId = parseInt(this.Userdata[0]);
+
+                            console.log(this.UserId);
+                            console.log(id);
+
+                            let parameter = JSON.stringify({
+                                userId: this.UserId,
+                                itemId: itemId
+                            });
+
+                            let url = "../../Backend/rentItem.php";
+
+                            $http({
+                                method: 'POST',
+                                url: url,
+                                data: parameter
+                            }).then(
+                                (response) => {
+                                    if (response.status === "201") {
+                                        $window.location.reload();
+                                    }
+                                })
+                        }
                     )
                 }
             });
     };
-
-    this.ausleihen = (id) => {
-
-        this.Userdata = UserdataService.laden();
-        this.UserId = parseInt(this.Userdata[0]);
-
-        console.log(this.UserId);
-        console.log(id);
-
-        let parameter = JSON.stringify({
-            userId: this.UserId,
-            itemId: id
-        });
-
-        let url = "../../Backend/rentItem.php";
-
-        $http({
-            method: 'POST',
-            url: url,
-            data: parameter
-        }).then(
-            (response) => {
-                console.log(response.data);
-            })
-    }
 });

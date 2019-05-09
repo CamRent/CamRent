@@ -61,7 +61,7 @@ function registerUser(PDO $pdo){
             if ($stmt->execute()) {
                 // register successful, set LastLogin in db, get all session vars, send success
                 setLastLogin($pdo);
-                $sql = "SELECT pk_userId, email, password, firstname, surname FROM users WHERE email = :email";
+                $sql = "SELECT PK_UserId, email, password, firstname, surname FROM users WHERE email = :email";
                 if ($stmt = $pdo->prepare($sql)) {
                     // Bind variables to the prepared statement as parameters
                     $param_email = $userdata['email'];
@@ -73,10 +73,10 @@ function registerUser(PDO $pdo){
                         if ($stmt->rowCount() == 1) {
                             if ($row = $stmt->fetch()) {
                                 saveIntoSession($row);
+                                sendUserdata($row['PK_UserId'],$row['firstname'], $row['surname'],0,$row['email']);
                             }
                         }
                     }
-                    sendSuccess("Sie wurden erfolgreich registriert.");
                 } else {
                     sendError("Ein Fehler ist aufgetreten.");
                 }

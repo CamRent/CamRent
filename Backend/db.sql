@@ -1,3 +1,7 @@
+create DATABASE camrent;
+
+use camrent;
+
 create table items
 (
   PK_ItemId   int auto_increment

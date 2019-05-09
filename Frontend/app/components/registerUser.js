@@ -3,7 +3,7 @@ app.component("registerUser", {
     controller: "registerUserController"
 });
 
-app.controller("registerUserController", function ($http, $window) {
+app.controller("registerUserController", function ($http, $window, UserdataService) {
     let url = document.URL.split("?")[1];
     let email = url.split("&")[0].split("=")[1];
     let activationCode = url.split("&")[1].split("=")[1];
@@ -31,9 +31,11 @@ app.controller("registerUserController", function ($http, $window) {
                 (response) => {
                     console.log(response.data);
 
-                    UserdataService.speichern(response.data);
+                    this.info = response.data.infotext;
 
-                    if(response.data.id !== undefined){
+                    UserdataService.speichern(response.data.id, response.data.firstname, response.data.surname, response.data.priority, response.data.email);
+
+                    if (response.data.id !== undefined) {
                         $window.location.href = 'index.html';
                     }
                 }, function (error) {
