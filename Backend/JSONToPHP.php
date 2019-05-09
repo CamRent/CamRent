@@ -136,7 +136,7 @@ function rentItems(){
 /*
  * @return array
  */
-function switchBorrowDeletes(){
+function switchBorrowDeleteReceive(){
     $json = file_get_contents('php://input');
     $obj = json_decode($json,true);
     $userdata = array("userId" => $obj['userId'],

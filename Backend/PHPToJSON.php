@@ -57,3 +57,9 @@ function sendUserdata($id, $firstname, $surname, $priority, $email){
         'email' => $email
     ));
 }
+
+function switchBorrowDeleteSend($bool){
+    echo json_encode((array(
+        'bool' => $bool
+    )));
+}

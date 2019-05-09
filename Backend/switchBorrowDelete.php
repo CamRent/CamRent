@@ -3,7 +3,7 @@ require_once "config.php";
 require_once "usefulFunctions.php";
 require_once "JSONToPHP.php";
 
-$temp = switchBorrowDeletes();
+$temp = switchBorrowDeleteReceive();
 $itemId = $temp['itemId'];
 $userId = $temp['userId'];
 
@@ -16,9 +16,9 @@ function switchBorrowDelete (PDO $pdo,$userId,$itemId){
         if($stmt1->execute()){
             $row = $stmt1->fetch();
             if($row['teacherId'] == $userId){
-                return true;
+                switchBorrowDeleteSend(true);
             } else{
-                return false;
+                switchBorrowDeleteSend(false);
             }
         }
     }
