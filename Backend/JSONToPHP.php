@@ -143,3 +143,10 @@ function switchBorrowDeleteReceive(){
         "itemId" => $obj['itemId']);
     return $userdata;
 }
+
+function receiveProfileList(){
+    $json = file_get_contents('php://input');
+    $obj = json_decode($json,true);
+    $userdata = array("userId" => $obj['userId']);
+    return $userdata;
+}
