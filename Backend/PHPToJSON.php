@@ -63,3 +63,7 @@ function switchBorrowDeleteSend($bool){
         'bool' => $bool
     )));
 }
+
+function sendProfileList($items){
+    echo json_encode($items);
+}
