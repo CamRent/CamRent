@@ -44,8 +44,8 @@ function sendEmail($pdo, $email,$activationcode ="test", $password){
         //Content
         $mail->isHTML(true);                                  // Set email format to HTML
         $mail->Subject = 'Here is the subject';
-        $mail->Body = "Link: localhost/camrent/backend/routeUser.php?email=$email&activationcode=$activationcode";
-        $mail->AltBody = "Link: localhost/camrent/backend/routeUser.php?email=$email&activationcode=$activationcode";
+        $mail->Body = "Link: http://localhost/camrent/backend/routeUser.php?email=$email&activationcode=$activationcode";
+        $mail->AltBody = "Link: http://localhost/camrent/backend/routeUser.php?email=$email&activationcode=$activationcode";
 
         $mail->send();
         //echo 'Message has been sent';

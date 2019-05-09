@@ -134,7 +134,7 @@ function rentItems(){
 }
 
 /*
- * @return array
+ *@return array
  */
 function switchBorrowDeleteReceive(){
     $json = file_get_contents('php://input');
@@ -144,9 +144,22 @@ function switchBorrowDeleteReceive(){
     return $userdata;
 }
 
+/*
+ *@return array
+ */
 function receiveProfileList(){
     $json = file_get_contents('php://input');
     $obj = json_decode($json,true);
     $userdata = array("userId" => $obj['userId']);
+    return $userdata;
+}
+
+/*
+ *@return array
+ */
+function returnItemReceive(){
+    $json = file_get_contents('php://input');
+    $obj = json_decode($json, true);
+    $userdata = array("itemId" => $obj['itemId']);
     return $userdata;
 }
