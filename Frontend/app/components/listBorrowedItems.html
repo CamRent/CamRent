@@ -1,0 +1,78 @@
+<style>
+
+    body {
+        color: black;
+    }
+
+    .list {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2em 2em 2em 20em;
+        border-bottom: black 1px solid;
+
+    }
+
+    .name {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .name:hover {
+        text-decoration: underline;
+        color: black;
+        cursor: pointer;
+    }
+
+    a:hover {
+        color: black;
+        cursor: pointer;
+    }
+
+    .beschreibung {
+        width: 200px;
+        font-size: 20px;
+    }
+
+    .title {
+        font-size: 35px;
+        font-weight: bold;
+        padding: 5em 0 0 0;
+    }
+
+    .ausleihen {
+        background-color: cornflowerblue;
+    }
+
+    .status {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .md-dialog-content {
+        max-width: 400px;
+    }
+
+    .container {
+        padding-bottom: 2em;
+    }
+
+</style>
+
+<div class="title">Alle Gegenstände:</div>
+
+<div class="container">
+
+    <div class="list" ng-repeat="x in $ctrl.items">
+        <a ng-click="$ctrl.submit($index, x.ID, $event)">
+            <div layout="column">
+                <div class="name">{{x.name}}</div>
+                <br>
+                <div class="beschreibung">{{x.description}}</div>
+                <br>
+                <br>
+            </div>
+        </a>
+    </div>
+</div>

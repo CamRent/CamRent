@@ -3,7 +3,7 @@ app.component("createGegenstand", {
     controller: "createGegenstandController"
 });
 
-app.controller("createGegenstandController", function ($http, $mdDialog, UserdataService) {
+app.controller("createGegenstandController", function ($http, $mdDialog, UserdataService, $window) {
     this.submit = () => {
 
         this.itemname = undefined;
@@ -32,11 +32,7 @@ app.controller("createGegenstandController", function ($http, $mdDialog, Userdat
 
                         this.description = result;
 
-                        console.log(this.itemname);
-                        console.log(this.description);
-
                         this.Userdata = UserdataService.laden();
-                        console.log(this.Userdata[0]);
 
                         let parameter = JSON.stringify({
                             name: this.itemname,
@@ -52,7 +48,10 @@ app.controller("createGegenstandController", function ($http, $mdDialog, Userdat
                             data: parameter
                         }).then(
                             (response) => {
-                                console.log(response.data);
+                                if (response.data.status === "201") {
+                                    $window.location.reload();
+                                }
+
                             }, function (error) {
                                 console.log(error);
                             });

@@ -19,11 +19,10 @@ addItem($pdo, createItem());
  */
 function addItem(PDO $pdo, $item)
 {
-    $user_check_query = "INSERT INTO items(name, description) VALUES (:name,:description)";
+    $user_check_query = "INSERT INTO items(name, teacherId, description) VALUES (:name, :teacherId, :description)";
     if ($stmt = $pdo->prepare($user_check_query)) {
         $stmt->bindParam(':name', $item['name'], PDO::PARAM_STR);
-        /* $stmt->bindParam(':available', $item['available'], PDO::PARAM_STR);*/
-        $stmt->bindParam(':teacherid', $item['teacherid'], PDO::PARAM_INT);
+        $stmt->bindParam(':teacherId', $item['teacherId'], PDO::PARAM_INT);
         $stmt->bindParam(':description', $item['description'], PDO::PARAM_STR);
         if ($stmt->execute()) {
             sendSuccess("Item has been added successfully");

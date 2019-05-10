@@ -6,7 +6,7 @@ create table items
 (
   PK_ItemId   int auto_increment
     primary key,
-  name        varchar(100) not null,
+  name        varchar(30) not null,
 available   tinyint      not null,
 teacherId   int          not null,
 description varchar(250) not null

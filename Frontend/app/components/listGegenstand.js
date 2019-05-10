@@ -14,10 +14,9 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog, U
         url: url
     }).then(
         (response) => {
-            console.log(response.data);
             for (let i = 0; i < response.data.length; i++) {
                 if (response.data[i].available === 1) {
-                    response.data[i].available = "Vergeben";
+                    response.data[i].available = "Ausgeborgt";
                 } else {
                     response.data[i].available = "Frei";
                 }
@@ -52,10 +51,7 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog, U
         }).then(
             (response) => {
 
-                console.log(response.data.bool);
-
                 if (response.data.bool === true) {
-                    console.log("adas");
                     $mdDialog.show(
                         $mdDialog.alert()
                             .clickOutsideToClose(true)
@@ -66,7 +62,7 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog, U
                     ).then(
                         this.delete = () => {
                             let parameter = JSON.stringify({
-                                itemId: this.frm_itemId
+                                itemId: itemId
                             });
 
                             let url = "../../Backend/deleteItem.php";
@@ -77,7 +73,9 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog, U
                                 data: parameter
                             }).then(
                                 (response) => {
-                                    console.log(response.data);
+                                    if (response.data.status === "201") {
+                                        $window.location.reload();
+                                    }
                                 }, function (error) {
                                     console.log(error);
                                 });
@@ -85,7 +83,6 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog, U
                     )
 
                 } else {
-                    console.log("adas1");
                     $mdDialog.show(
                         $mdDialog.alert()
                             .clickOutsideToClose(true)
@@ -115,7 +112,7 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog, U
                                 data: parameter
                             }).then(
                                 (response) => {
-                                    if (response.status === "201") {
+                                    if (response.data.status === "201") {
                                         $window.location.reload();
                                     }
                                 })
