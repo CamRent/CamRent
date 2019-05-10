@@ -126,7 +126,7 @@ function deleteItems(){
  * get Input to rent an Item
  * @return array
  */
-function rentItems(){
+function rentItemReceive(){
     $json = file_get_contents('php://input');
     $obj = json_decode($json,true);
     $userdata = array("userId" => $obj['userId'],
@@ -161,6 +161,16 @@ function receiveProfileList(){
 function returnItemReceive(){
     $json = file_get_contents('php://input');
     $obj = json_decode($json, true);
+    $userdata = array("itemId" => $obj['itemId']);
+    return $userdata;
+}
+
+/*
+ *@return array
+ */
+function returnTrueNotAvailableReceive(){
+    $json = file_get_contents('php://input');
+    $obj = json_decode($json,true);
     $userdata = array("itemId" => $obj['itemId']);
     return $userdata;
 }

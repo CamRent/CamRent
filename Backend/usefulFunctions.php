@@ -177,6 +177,7 @@ function writeIntoUnverifiedEmail(PDO $pdo, $email, $activationcode)
         }
     }
 }
+
 /**
  * returns true if an activationcode matches the id
  * @param PDO $pdo
