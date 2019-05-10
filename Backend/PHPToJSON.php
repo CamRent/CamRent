@@ -67,3 +67,9 @@ function switchBorrowDeleteSend($bool){
 function sendProfileList($items){
     echo json_encode($items);
 }
+
+function sendReturnTrueNotAvailable($notAvailable){
+    echo json_encode((array(
+        'notAvailable' => $notAvailable
+    )));
+}

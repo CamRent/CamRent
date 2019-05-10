@@ -19,7 +19,6 @@ function profileList(PDO $pdo,$userId)
                 $items[$count]['available'] = $row['available'];
                 $items[$count]['teacherId'] = $row['teacherId'];
                 $items[$count]['description'] = $row['description'];
-
 }
         }
     }

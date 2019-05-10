@@ -9,7 +9,7 @@ require_once "JSONToPHP.php";
  * @param $itemId
  */
 
-$temp = rentItems();
+$temp = rentItemReceive();
 $itemId = $temp["itemId"];
 
 function rentItem(PDO $pdo, $itemId){
@@ -32,7 +32,7 @@ function rentItem(PDO $pdo, $itemId){
         if ($stmt2 = $pdo->prepare($sql2)) {
             $begin_date = date("Y-m-d");
             $date_end = date('Y-m-d', strtotime($begin_date. ' + 14 days'));
-            $temp = rentItems();
+            $temp = returnItemReceive();
             $itemId = $temp["itemId"];
             $userId = $temp["userId"];
 
