@@ -14,7 +14,7 @@ $temp = rentItemReceive();
 $itemId = $temp["itemId"];
 $userId = $temp['userId'];
 
-
+rentItem($pdo,$itemId, $userId);
 
 function rentItem(PDO $pdo, $itemId, $userId){
     if (doesItemExist($pdo, $itemId)) {
@@ -55,4 +55,3 @@ function rentItem(PDO $pdo, $itemId, $userId){
     }
 }
 
-rentItem($pdo,$itemId);
