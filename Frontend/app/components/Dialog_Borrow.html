@@ -1,0 +1,41 @@
+<style>
+
+    .md-toolbar-tools {
+        background: #9AACE6;
+        color: black;
+        font-weight: bold;
+    }
+
+</style>
+
+<md-dialog aria-label="Item">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Gegenstandinformationen</h2>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h2></h2>
+                <p>
+                    {{fulldescription[index]}}
+                </p>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+                More on Wikipedia
+            </md-button>
+            <span flex></span>
+            <md-button ng-click="answer('not useful')">
+                Not Useful
+            </md-button>
+            <md-button ng-click="answer('useful')">
+                Useful
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
