@@ -12,8 +12,11 @@ require_once "PHPToJSON.php";
 
 $temp = rentItemReceive();
 $itemId = $temp["itemId"];
+$userId = $temp['userId'];
 
-function rentItem(PDO $pdo, $itemId){
+
+
+function rentItem(PDO $pdo, $itemId, $userId){
     if (doesItemExist($pdo, $itemId)) {
         //select Item to change
         $user_check_query = "SELECT PK_ItemId, teacherId FROM items WHERE PK_ItemId = :itemId";
@@ -33,14 +36,11 @@ function rentItem(PDO $pdo, $itemId){
         if ($stmt2 = $pdo->prepare($sql2)) {
             $begin_date = date("Y-m-d");
             $date_end = date('Y-m-d', strtotime($begin_date. ' + 14 days'));
-            $temp = returnItemReceive();
-            $itemId = $temp["itemId"];
-            $userId = $temp["userId"];
 
             $stmt2->bindParam(':begin_date', $begin_date, PDO::PARAM_STR);
             $stmt2->bindParam(':end_date', $date_end, PDO::PARAM_STR);
             $stmt2->bindParam(':teacherId', $teacherId, PDO::PARAM_STR);
-            $stmt2->bindParam(':PK_UserId', $userId, PDO::PARAM_STR);
+            $stmt2->bindParam(':PK_UserId', $userId, PDO::PARAM_INT);
             $stmt2->bindParam(':PK_ItemId',$itemId,PDO::PARAM_INT);
             $stmt2->execute();
         }
