@@ -11,7 +11,8 @@ app.controller("listBorrowedItemsController", function ($http, $scope, $mdDialog
     let parameter = JSON.stringify({
         userId: this.UserId
     });
-    let url = "../../Backend/profilList.php";
+
+    let url = "../../Backend/profileList.php";
     this.items = {};
     this.fulldescription = {};
 
@@ -25,6 +26,11 @@ app.controller("listBorrowedItemsController", function ($http, $scope, $mdDialog
             console.log(response);
 
             for (let i = 0; i < response.data.length; i++) {
+                if (response.data[i].available === 1) {
+                    response.data[i].available = "Ausgeborgt";
+                } else {
+                    response.data[i].available = "Frei";
+                }
 
                 if (response.data[i].description.length > 100) {
                     this.fulldescription[i] = response.data[i].description;
@@ -43,10 +49,11 @@ app.controller("listBorrowedItemsController", function ($http, $scope, $mdDialog
         this.UserId = parseInt(this.Userdata[0]);
 
         let parameter = JSON.stringify({
-            userId: this.UserId
+            userId: this.UserId,
+            itemId: itemId
         });
 
-        let url = "../../Backend/returnItem.php";
+        let url = "../../Backend/switchBorrowDelete.php";
 
         $http({
             method: 'POST',
@@ -54,41 +61,97 @@ app.controller("listBorrowedItemsController", function ($http, $scope, $mdDialog
             data: parameter
         }).then(
             (response) => {
-                $mdDialog.show(
-                    $mdDialog.alert()
-                        .clickOutsideToClose(true)
-                        .title(this.items[i].name)
-                        .textContent(this.fulldescription[i])
-                        .targetEvent(ev)
-                        .ok("Zurückgeben")
-                ).then(
-                    this.zurückgeben = (id) => {
 
-                        this.Userdata = UserdataService.laden();
-                        this.UserId = parseInt(this.Userdata[0]);
+                console.log(itemId);
 
-                        console.log(this.UserId);
-                        console.log(id);
+                let parameter = JSON.stringify({
+                    itemId: itemId
+                });
 
-                        let parameter = JSON.stringify({
-                            userId: this.UserId,
-                            itemId: itemId
-                        });
+                let url = "../../Backend/returnTrueNotAvailable.php";
 
-                        let url = "../../Backend/returnItem.php";
+                $http({
+                    method: 'POST',
+                    url: url,
+                    parameter: parameter
+                }).then(
+                    (response) => {
+                        console.log(response.data)
+                    });
 
-                        $http({
-                            method: 'POST',
-                            url: url,
-                            data: parameter
-                        }).then(
-                            (response) => {
-                                if (response.data.status === "201") {
-                                    $window.location.reload();
-                                }
-                            })
-                    }
-                )
+                if (response.data.notAvailable === true) {
+                    $mdDialog.show(
+                        $mdDialog.confirm()
+                            .clickOutsideToClose(true)
+                            .title(this.items[i].name)
+                            .textContent(this.fulldescription[i])
+                            .targetEvent(ev)
+                            .ok("Zurückgeben")
+                    ).then(
+                        this.zurückgeben = () => {
+                            console.log(itemId);
+
+                            let parameter = JSON.stringify({
+                                itemId: itemId
+                            });
+
+                            let url = "../../Backend/returnItem.php";
+
+                            $http({
+                                method: 'POST',
+                                url: url,
+                                data: parameter
+                            }).then(
+                                (response) => {
+
+                                    console.log(response.data);
+
+                                    if (response.data.status === "201") {
+                                        $window.location.reload();
+                                    }
+                                })
+                        }
+                    )
+                } else {
+                    $mdDialog.show(
+                        $mdDialog.confirm()
+                            .clickOutsideToClose(true)
+                            .title(this.items[i].name)
+                            .textContent(this.fulldescription[i])
+                            .targetEvent(ev)
+                            .ok("Ausborgen")
+                    ).then(
+                        this.ausleihen = () => {
+
+                            this.Userdata = UserdataService.laden();
+                            this.UserId = parseInt(this.Userdata[0]);
+
+                            console.log(this.UserId);
+                            console.log(itemId);
+
+                            let parameter = JSON.stringify({
+                                userId: this.UserId,
+                                itemId: itemId
+                            });
+
+                            let url = "../../Backend/rentItem.php";
+
+                            $http({
+                                method: 'POST',
+                                url: url,
+                                data: parameter
+                            }).then(
+                                (response) => {
+
+                                    console.log(response.data);
+
+                                    if (response.data.status === "201") {
+                                        $window.location.reload();
+                                    }
+                                })
+                        }
+                    )
+                }
             });
     };
 });
