@@ -14,16 +14,15 @@ function profileList(PDO $pdo,$userId)
     $items = array();
     $count = 0;
     $sql = "SELECT * FROM borrow where PK_UserId = :userId";
-    if ($stmt = $pdo->prepare($sql)) {
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':userId',$userId,PDO::PARAM_INT);
         if ($stmt->execute()) {
-            $stmt->bindParam(':userId',$userId,PDO::PARAM_INT);
             if ($row = $stmt->fetch()) {
                 $items[$count]['ID'] = $row['PK_ItemId'];
                 $items[$count]['name'] = $row['name'];
                 $items[$count]['available'] = $row['available'];
                 $items[$count]['teacherId'] = $row['teacherId'];
                 $items[$count]['description'] = $row['description'];
-}
         }
     }
     return $items;
