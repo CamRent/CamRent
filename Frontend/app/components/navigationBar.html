@@ -1,10 +1,12 @@
 <style>
 
-    .parent  {
+    .parent {
         position: fixed;
+        left: 0;
+        top: 0;
         width: 100%;
-        z-index: +2;
-
+        overflow: hidden;
+        z-index: 1;
     }
 
     .nav-bar {
@@ -40,13 +42,13 @@
     }
 </style>
 <div class="parent">
-<div class="nav-bar">
-    <img src="images/CR_Logo_colour.png" height="60"/>
+    <div class="nav-bar">
+        <img src="images/CR_Logo_colour.png" height="60"/>
         <a class="nav-items" href="index.html">Home</a>
         <a class="nav-items" href="profil.html">Profil</a>
-    <div>
-        <login></login>
-        <logout></logout>
+        <div>
+            <login></login>
+            <logout></logout>
+        </div>
     </div>
-</div>
 </div>

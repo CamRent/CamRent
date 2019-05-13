@@ -45,39 +45,19 @@ app.controller("listBorrowedItemsController", function ($http, $scope, $mdDialog
         });
 
     this.submit = (i, itemId, ev) => {
-        this.Userdata = UserdataService.laden();
-        this.UserId = parseInt(this.Userdata[0]);
-
         let parameter = JSON.stringify({
-            userId: this.UserId,
             itemId: itemId
         });
 
-        let url = "../../Backend/switchBorrowDelete.php";
+        let url = "../../Backend/returnTrueNotAvailable.php";
 
         $http({
             method: 'POST',
             url: url,
-            data: parameter
+            parameter: parameter
         }).then(
             (response) => {
-
-                console.log(itemId);
-
-                let parameter = JSON.stringify({
-                    itemId: itemId
-                });
-
-                let url = "../../Backend/returnTrueNotAvailable.php";
-
-                $http({
-                    method: 'POST',
-                    url: url,
-                    parameter: parameter
-                }).then(
-                    (response) => {
-                        console.log(response.data)
-                    });
+                console.log(response.data)
 
                 if (response.data.notAvailable === true) {
                     $mdDialog.show(
@@ -96,45 +76,6 @@ app.controller("listBorrowedItemsController", function ($http, $scope, $mdDialog
                             });
 
                             let url = "../../Backend/returnItem.php";
-
-                            $http({
-                                method: 'POST',
-                                url: url,
-                                data: parameter
-                            }).then(
-                                (response) => {
-
-                                    console.log(response.data);
-
-                                    if (response.data.status === "201") {
-                                        $window.location.reload();
-                                    }
-                                })
-                        }
-                    )
-                } else {
-                    $mdDialog.show(
-                        $mdDialog.confirm()
-                            .clickOutsideToClose(true)
-                            .title(this.items[i].name)
-                            .textContent(this.fulldescription[i])
-                            .targetEvent(ev)
-                            .ok("Ausborgen")
-                    ).then(
-                        this.ausleihen = () => {
-
-                            this.Userdata = UserdataService.laden();
-                            this.UserId = parseInt(this.Userdata[0]);
-
-                            console.log(this.UserId);
-                            console.log(itemId);
-
-                            let parameter = JSON.stringify({
-                                userId: this.UserId,
-                                itemId: itemId
-                            });
-
-                            let url = "../../Backend/rentItem.php";
 
                             $http({
                                 method: 'POST',
