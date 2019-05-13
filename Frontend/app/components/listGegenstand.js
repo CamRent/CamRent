@@ -50,10 +50,9 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog, U
             data: parameter
         }).then(
             (response) => {
-
                 if (response.data.bool === true) {
                     $mdDialog.show(
-                        $mdDialog.alert()
+                        $mdDialog.confirm()
                             .clickOutsideToClose(true)
                             .title(this.items[i].name)
                             .textContent(this.fulldescription[i])
@@ -82,22 +81,44 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog, U
                         }
                     )
 
-                } else {
+                } else if(response.data.bool === false) {
+
+                    console.log(itemId);
+
+                    let parameter = JSON.stringify({
+                        itemId: itemId
+                    });
+
+                    let url = "../../Backend/returnTrueNotAvailable.php";
+
+                    $http({
+                        method: 'POST',
+                        url: url,
+                        parameter: parameter
+                    }).then(
+                        (response) => {
+                            console.log(response)
+                        });
+
+                    if(response.data === "") {
+
+                    }
+
                     $mdDialog.show(
-                        $mdDialog.alert()
+                        $mdDialog.confirm()
                             .clickOutsideToClose(true)
                             .title(this.items[i].name)
                             .textContent(this.fulldescription[i])
                             .targetEvent(ev)
                             .ok("Ausborgen")
                     ).then(
-                        this.ausleihen = (id) => {
+                        this.ausleihen = () => {
 
                             this.Userdata = UserdataService.laden();
                             this.UserId = parseInt(this.Userdata[0]);
 
                             console.log(this.UserId);
-                            console.log(id);
+                            console.log(itemId);
 
                             let parameter = JSON.stringify({
                                 userId: this.UserId,
@@ -112,6 +133,9 @@ app.controller("listGegenstandController", function ($http, $scope, $mdDialog, U
                                 data: parameter
                             }).then(
                                 (response) => {
+
+                                    console.log(response.data);
+
                                     if (response.data.status === "201") {
                                         $window.location.reload();
                                     }

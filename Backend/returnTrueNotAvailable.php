@@ -2,6 +2,7 @@
 require_once "config.php";
 require_once "usefulFunctions.php";
 require_once "JSONToPHP.php";
+require_once "PHPToJSON.php";
 
 
 $temp = returnTrueNotAvailableReceive();
@@ -13,19 +14,21 @@ $itemId = $temp["itemId"];
  *@param $itemId
  */
 function returnTrueNotAvailable(PDO $pdo,$itemId){
-
-    if(doesItemExist($pdo,$itemId)){
-        $check_user_query = "SELECT available FROM items WHERE PK_ItemId = :itemId";
-        $stmt1 = $pdo->prepare(($check_user_query));
-        $stmt1->bindParam('itemId',$itemId,PDO::PARAM_INT);
-        $row = $stmt1->fetch();
-        if($row['available'] == 1){
-            sendReturnTrueNotAvailable(true);
-        } else{
-            sendReturnTrueNotAvailable(false);
+    if (doesItemExist($pdo, $itemId)) {
+        $user_check_query = 'SELECT available FROM items WHERE PK_ItemId = :itemId';
+        $stmt1 = $pdo->prepare(($user_check_query));
+        $stmt1->bindParam(':itemId', $itemId, PDO::PARAM_INT);
+        if ($stmt1->execute()) {
+            $row = $stmt1->fetch();
+            if ($row['available'] === 1) {
+                sendReturnTrueNotAvailable(true);
+            } else {
+                sendReturnTrueNotAvailable(false);
+            }
         }
-    } else{
-        sendError('Item does not exist');
+    } else {
+        sendError('Incorrect input');
     }
-    return false;
 }
+
+returnTrueNotAvailable($pdo,$itemId);

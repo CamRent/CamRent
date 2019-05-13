@@ -32,5 +32,22 @@ app.service("UserdataService", function ($log) {
         array.push(localStorage.getItem("Email"));
 
         return array;
+    };
+
+    this.saveDialogBorrow = (desc, available) => {
+        localStorage.setItem("Desc", desc);
+        localStorage.setItem("Available", available);
+    };
+
+    this.loadDialogBorrow = () => {
+
+        console.log("1");
+
+        var array = [];
+
+        array.push(localStorage.getItem("Desc"));
+        array.push(localStorage.getItem("Available"));
+
+        return array;
     }
 });

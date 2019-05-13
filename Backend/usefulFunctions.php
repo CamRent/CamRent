@@ -111,7 +111,7 @@ function doesItemExist(PDO $pdo, $itemId)
     $stmt = $pdo->prepare($user_check_query);
     $stmt->bindParam(':itemId', $itemId, PDO::PARAM_INT);
     if ($stmt->execute()) {
-        if ($stmt->rowCount() == 1) {
+        if ($stmt->rowCount() >= 1) {
             return true;
         }
         return false;

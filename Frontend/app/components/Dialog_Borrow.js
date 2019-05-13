@@ -3,20 +3,9 @@ app.component("dialogBorrow", {
     controller: "dialogBorrowController"
 });
 
-app.controller("dialogBorrowController", function ($http, $scope) {
+app.controller("dialogBorrowController", function ($http, UserdataService) {
 
-    let url = "../../Backend/overviewOfAllItems.php";
-    this.fulldescription = {};
+    this.array = UserdataService.loadDialogBorrow();
 
-    $http({
-        method: 'POST',
-        url: url
-    }).then(
-        (response) => {
-
-
-
-        }, function (error) {
-            console.log(error);
-        });
+    console.log(this.array[0]);
 });
