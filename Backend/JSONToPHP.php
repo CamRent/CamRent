@@ -103,7 +103,8 @@ function getEmail()
  * *gets Input for Item
  * @return array
  */
-function createItem(){
+function createItem()
+{
     $json = file_get_contents('php://input');
     $obj = json_decode($json, true);
     $userdata = array("name" => $obj['name'],
@@ -115,9 +116,10 @@ function createItem(){
 /**
  * @return array|int
  */
-function deleteItems(){
+function deleteItems()
+{
     $json = file_get_contents('php://input');
-    $obj = json_decode($json,true);
+    $obj = json_decode($json, true);
     $userdata = array("itemId" => $obj['itemId']);
     return $userdata;
 }
@@ -126,9 +128,10 @@ function deleteItems(){
  * get Input to rent an Item
  * @return array
  */
-function rentItemReceive(){
+function rentItemReceive()
+{
     $json = file_get_contents('php://input');
-    $obj = json_decode($json,true);
+    $obj = json_decode($json, true);
     $userdata = array("userId" => $obj['userId'],
         "itemId" => $obj['itemId']);
     return $userdata;
@@ -137,9 +140,10 @@ function rentItemReceive(){
 /*
  *@return array
  */
-function switchBorrowDeleteReceive(){
+function switchBorrowDeleteReceive()
+{
     $json = file_get_contents('php://input');
-    $obj = json_decode($json,true);
+    $obj = json_decode($json, true);
     $userdata = array("userId" => $obj['userId'],
         "itemId" => $obj['itemId']);
     return $userdata;
@@ -148,9 +152,10 @@ function switchBorrowDeleteReceive(){
 /*
  *@return array
  */
-function receiveProfileList(){
+function receiveProfileList()
+{
     $json = file_get_contents('php://input');
-    $obj = json_decode($json,true);
+    $obj = json_decode($json, true);
     $userdata = array("userId" => $obj['userId']);
     return $userdata;
 }
@@ -158,19 +163,21 @@ function receiveProfileList(){
 /*
  *@return array
  */
-function returnItemReceive(){
+function returnItemReceive()
+{
     $json = file_get_contents('php://input');
     $obj = json_decode($json, true);
-    $userdata = array("itemId" => $obj['itemId']);
+    $userdata = array("itemId" => $obj['itemId'], "userId" => $obj['userId']);
     return $userdata;
 }
 
 /*
  *@return array
  */
-function returnTrueNotAvailableReceive(){
+function returnTrueNotAvailableReceive()
+{
     $json = file_get_contents('php://input');
-    $obj = json_decode($json,true);
+    $obj = json_decode($json, true);
     $userdata = array("itemId" => $obj['itemId']);
     return $userdata;
 }

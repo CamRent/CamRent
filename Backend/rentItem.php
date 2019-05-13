@@ -2,6 +2,7 @@
 require_once "config.php";
 require_once "usefulFunctions.php";
 require_once "JSONToPHP.php";
+require_once "PHPToJSON.php";
 
 /**
  * user can rent/lend items, which changes their availability status
@@ -47,6 +48,7 @@ function rentItem(PDO $pdo, $itemId){
             while ($row = $stmt1->fetch(PDO::FETCH_ASSOC)) {
                 if ($row['teacherId'] !== null) {
                     $sql1->execute();
+                    sendSuccess("Wurde Ausgeborgt");
                 }
             }
         }
