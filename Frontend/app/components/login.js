@@ -27,7 +27,7 @@ app.controller("LoginController", function($http, $window, UserdataService){
                     UserdataService.speichern(response.data.id, response.data.firstname, response.data.surname, response.data.priority, response.data.email);
 
                     if (response.data.id !== undefined) {
-                        $window.location.href = 'profil.html';
+                        $window.location.href = 'index.html';
                     }
                 }, function (error) {
                     console.log(error);

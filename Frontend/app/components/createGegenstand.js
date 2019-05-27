@@ -4,6 +4,22 @@ app.component("createGegenstand", {
 });
 
 app.controller("createGegenstandController", function ($http, $mdDialog, UserdataService, $window) {
+
+    let url = "../../Backend/isLoggedIn.php";
+
+    $http({
+        method: 'POST',
+        url: url
+    }).then(
+        (response) => {
+            console.log(response);
+
+            this.show = response.data.isLoggedIn;
+
+        }, function (error) {
+            console.log(error);
+        });
+
     this.submit = () => {
 
         this.itemname = undefined;
